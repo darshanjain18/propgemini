@@ -72,15 +72,32 @@ function legalPageContent(string $page): array
     ];
 }
 
-function renderLegalBody(string $body): string
+/**
+ * Parse a legal document body into structured sections for the public layout.
+ *
+ * @return array{
+ *   updated_label: string,
+ *   updated_short: string,
+ *   preamble: list<string>,
+ *   sections: list<array{id: string, number: string, title: string, heading: string, paragraphs: list<string>}>
+ * }
+ */
+function parseLegalDocument(string $body): array
 {
     $body = trim(str_replace(["\r\n", "\r"], "\n", $body));
+    $result = [
+        'updated_label' => '',
+        'updated_short' => '',
+        'preamble' => [],
+        'sections' => [],
+    ];
+
     if ($body === '') {
-        return '<p>Content coming soon.</p>';
+        return $result;
     }
 
     $parts = preg_split("/\n{2,}/", $body) ?: [];
-    $html = '';
+    $current = null;
 
     foreach ($parts as $part) {
         $part = trim($part);
@@ -91,27 +108,67 @@ function renderLegalBody(string $body): string
         $lines = explode("\n", $part);
         $first = trim($lines[0]);
 
-        // Numbered section heading: "1. Title"
-        if (preg_match('/^\d+\.\s+.+$/', $first) === 1 && count($lines) > 1) {
-            $html .= '<h2>' . h($first) . '</h2>';
+        if (preg_match('/^last updated:\s*(.+)$/i', $first, $m) === 1) {
+            $result['updated_label'] = $first;
+            $result['updated_short'] = trim($m[1]);
+            continue;
+        }
+
+        if (preg_match('/^(\d+)\.\s+(.+)$/', $first, $m) === 1) {
+            if ($current !== null) {
+                $result['sections'][] = $current;
+            }
+            $number = $m[1];
+            $title = trim($m[2]);
+            $current = [
+                'id' => 'section-' . $number,
+                'number' => $number,
+                'title' => $title,
+                'heading' => $number . '. ' . $title,
+                'paragraphs' => [],
+            ];
             $rest = trim(implode("\n", array_slice($lines, 1)));
             if ($rest !== '') {
-                $html .= '<p>' . nl2br(h($rest), false) . '</p>';
+                $current['paragraphs'][] = $rest;
             }
             continue;
         }
 
-        if (preg_match('/^\d+\.\s+.+$/', $first) === 1) {
-            $html .= '<h2>' . h($first) . '</h2>';
-            continue;
+        if ($current !== null) {
+            $current['paragraphs'][] = $part;
+        } else {
+            $result['preamble'][] = $part;
         }
+    }
 
-        if (preg_match('/^last updated:/i', $first) === 1) {
-            $html .= '<p class="legal-updated">' . h($first) . '</p>';
-            continue;
+    if ($current !== null) {
+        $result['sections'][] = $current;
+    }
+
+    return $result;
+}
+
+function renderLegalBody(string $body): string
+{
+    $doc = parseLegalDocument($body);
+    if ($doc['sections'] === [] && $doc['preamble'] === [] && $doc['updated_label'] === '') {
+        return '<p>Content coming soon.</p>';
+    }
+
+    $html = '';
+    if ($doc['updated_label'] !== '') {
+        $html .= '<p class="legal-updated">' . h($doc['updated_label']) . '</p>';
+    }
+
+    foreach ($doc['preamble'] as $paragraph) {
+        $html .= '<p>' . nl2br(h($paragraph), false) . '</p>';
+    }
+
+    foreach ($doc['sections'] as $section) {
+        $html .= '<h2 id="' . h($section['id']) . '">' . h($section['heading']) . '</h2>';
+        foreach ($section['paragraphs'] as $paragraph) {
+            $html .= '<p>' . nl2br(h($paragraph), false) . '</p>';
         }
-
-        $html .= '<p>' . nl2br(h($part), false) . '</p>';
     }
 
     return $html !== '' ? $html : '<p>Content coming soon.</p>';
