@@ -6,8 +6,13 @@ require_once dirname(__DIR__) . '/includes/content.php';
 $pageTitle = 'Gallery | PropGemini';
 $pageDescription = 'Photographs and films from PropGemini homes and workspaces.';
 $bodyClass = 'gallery-page';
-$pageStyles = ['public/css/masonry.css'];
+$pageStyles = ['public/css/gallery.css', 'public/css/masonry.css'];
 $pageScripts = ['public/js/masonry.js'];
+
+$galleryHeroImage = 'public/images/projects/pune-tower-1.jpg';
+if (!is_file(dirname(__DIR__) . '/' . $galleryHeroImage)) {
+    $galleryHeroImage = 'public/images/horizon.jpg';
+}
 $galleryItems = array_values(array_filter(
     publishedGallery(),
     static function (array $item): bool {
@@ -38,12 +43,32 @@ require dirname(__DIR__) . '/includes/header.php';
 require dirname(__DIR__) . '/includes/navbar.php';
 ?>
 <main>
-    <?php renderPublicPageHero(
-        'Gallery',
-        'Homes and spaces,',
-        'Photographs and films from the properties we present.',
-        'in pictures.'
-    ); ?>
+    <section class="pg-gallery-hero-section" aria-labelledby="pg-gallery-hero-heading">
+        <div class="wrap">
+            <div class="pg-gallery-hero">
+                <svg class="pg-gallery-hero-waves" viewBox="0 0 900 320" fill="none" aria-hidden="true" focusable="false">
+                    <path class="pg-gallery-hero-wave pg-gallery-hero-wave--left" d="M20 250C110 190 180 150 270 170C380 196 430 270 540 250C650 230 700 140 860 120" stroke="currentColor" stroke-width="1.4"/>
+                    <path class="pg-gallery-hero-wave pg-gallery-hero-wave--left" d="M10 285C105 235 175 205 265 220C375 240 440 300 550 275C660 250 730 165 880 145" stroke="currentColor" stroke-width="1" opacity="0.55"/>
+                    <path class="pg-gallery-hero-wave pg-gallery-hero-wave--mid" d="M420 40C500 70 560 120 620 110C700 96 740 40 820 55" stroke="currentColor" stroke-width="1.2" opacity="0.65"/>
+                </svg>
+                <div class="pg-gallery-hero-copy">
+                    <p class="pg-gallery-hero-kicker">Gallery &amp; Collections</p>
+                    <h1 id="pg-gallery-hero-heading">Explore Spaces That <em>Inspire.</em></h1>
+                    <p class="pg-gallery-hero-lead">A visual journey through exceptional residences, refined interiors and thoughtfully designed spaces.</p>
+                </div>
+                <figure class="pg-gallery-hero-visual">
+                    <img
+                        src="<?= h(webPath($galleryHeroImage)) ?>"
+                        alt="Luxury residential architecture at dusk"
+                        width="960"
+                        height="720"
+                        decoding="async"
+                    >
+                </figure>
+            </div>
+        </div>
+    </section>
+
     <section class="pg-section gallery-masonry-wrap">
         <div class="wrap">
             <?php if ($galleryItems === []): ?>

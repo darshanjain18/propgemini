@@ -12,6 +12,9 @@ DirectoryIndex index.php
     # Clean property URLs: /property/{slug}
     RewriteRule ^property/([^/]+)/?$ pages/property.php?id=$1 [L,QSA]
 
+    # Clean news article URLs: /news/{slug}
+    RewriteRule ^news/([^/]+)/?$ pages/news-article.php?slug=$1 [L,QSA]
+
     # Map /path to /path.php when that file exists.
     RewriteCond %{REQUEST_FILENAME}.php -f
     RewriteRule ^(.+?)/?$ $1.php [L]

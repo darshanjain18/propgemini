@@ -31,6 +31,13 @@ if (preg_match('#^/property/([^/]+)/?$#', $uri, $match) === 1) {
     return true;
 }
 
+// Clean news article URLs: /news/{slug}
+if (preg_match('#^/news/([^/]+)/?$#', $uri, $match) === 1) {
+    $_GET['slug'] = rawurldecode($match[1]);
+    require $root . DIRECTORY_SEPARATOR . 'pages' . DIRECTORY_SEPARATOR . 'news-article.php';
+    return true;
+}
+
 $relative = ltrim($uri, '/');
 $path = $root . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $relative);
 

@@ -16,13 +16,14 @@ if ($returnId > 0) {
     $returnPath .= '&id=' . $returnId;
 }
 $samples = newsLayoutSamples();
+$live = $returnId > 0 ? newsPostById($returnId) : null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News layout samples</title>
+    <title>News layout preview</title>
     <link rel="stylesheet" href="<?= h(webPath('public/css/style.css')) ?>">
     <link rel="stylesheet" href="<?= h(webPath('public/css/design-system.css')) ?>">
     <style>
@@ -43,7 +44,7 @@ $samples = newsLayoutSamples();
 </head>
 <body>
     <div class="preview-bar">
-        <strong>Sample of every news layout</strong>
+        <strong><?= $live ? 'Live article layout preview' : 'Sample of every news layout' ?></strong>
         <nav class="preview-nav">
             <?php foreach (newsLayouts() as $value => $label): ?>
                 <a class="<?= $selected === $value ? 'is-current' : '' ?>" data-layout="<?= h($value) ?>" href="#layout-<?= h($value) ?>"><?= h(newsLayoutLabel($value)) ?></a>
@@ -51,16 +52,30 @@ $samples = newsLayoutSamples();
         </nav>
         <a class="preview-back" id="previewBack" href="<?= h(adminUrl($returnPath)) ?>">Back to the form</a>
     </div>
-    <p class="preview-note">Click a layout and the sample shifts to that design. The gold pill is the one you are viewing. Go back and save your news in that layout.</p>
+    <p class="preview-note"><?= $live
+        ? 'Switching layouts below only changes the preview — your saved content stays intact until you choose a layout and save the form.'
+        : 'Click a layout and the sample shifts to that design. The gold pill is the one you are viewing. Go back and save your news in that layout.' ?></p>
     <div class="layout-stage">
-    <?php foreach ($samples as $layout => $item): ?>
-        <section class="layout-sample<?= $selected === $layout ? ' is-current' : '' ?>" id="layout-<?= h($layout) ?>" data-layout="<?= h($layout) ?>">
-            <h2 class="sample-label"><?= h(newsLayoutLabel($layout)) ?></h2>
-            <div class="wrap">
-                <?php renderNewsItem($item); ?>
-            </div>
-        </section>
-    <?php endforeach; ?>
+    <?php if ($live !== null): ?>
+        <?php foreach (array_keys(newsLayouts()) as $layout): ?>
+            <?php $item = array_merge($live, ['layout' => $layout]); ?>
+            <section class="layout-sample<?= $selected === $layout ? ' is-current' : '' ?>" id="layout-<?= h($layout) ?>" data-layout="<?= h($layout) ?>">
+                <h2 class="sample-label"><?= h(newsLayoutLabel($layout)) ?> · <?= h((string) $live['title']) ?></h2>
+                <div class="wrap">
+                    <?php renderNewsItem($item); ?>
+                </div>
+            </section>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <?php foreach ($samples as $layout => $item): ?>
+            <section class="layout-sample<?= $selected === $layout ? ' is-current' : '' ?>" id="layout-<?= h($layout) ?>" data-layout="<?= h($layout) ?>">
+                <h2 class="sample-label"><?= h(newsLayoutLabel($layout)) ?></h2>
+                <div class="wrap">
+                    <?php renderNewsItem($item); ?>
+                </div>
+            </section>
+        <?php endforeach; ?>
+    <?php endif; ?>
     </div>
     <script>
         const links = document.querySelectorAll('.preview-nav a');

@@ -40,8 +40,8 @@ $year = (int) date('Y');
             <a href="<?= h(webPath()) ?>">Home</a>
             <a href="<?= h(webPath('pages/properties')) ?>">Properties</a>
             <a href="<?= h(webPath('pages/about')) ?>">About</a>
-            <a href="<?= h(webPath('pages/emi-calculator')) ?>">EMI Calculator</a>
             <a href="<?= h($enquire['href']) ?>">Enquire Now</a>
+            <a href="<?= h(webPath('pages/careers')) ?>">Careers</a>
         </nav>
 
         <div class="footer-links">
@@ -55,8 +55,7 @@ $year = (int) date('Y');
             <h4>Resources</h4>
             <a href="<?= h(webPath('pages/news')) ?>">News</a>
             <a href="<?= h(webPath('pages/gallery')) ?>">Gallery</a>
-            <a href="<?= h(webPath('pages/emi-calculator')) ?>">EMI Calculator</a>
-            <a href="<?= h(webPath('pages/careers')) ?>">Careers</a>
+            <a href="<?= h(webPath('pages/emi-calculator')) ?>">EMI Calculator</a>          
         </div>
 
         <div class="footer-contact">
