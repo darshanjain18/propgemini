@@ -1005,6 +1005,11 @@ body.contact-page main > .pg-section {
   padding-top: 118px;
 }
 
+/* Legacy contact layout helpers — superseded by contact.css editorial page */
+body.contact-page main.pg-contact > .pg-section {
+  padding-top: 0;
+}
+
 body:not(.home) .nav .nav-cta {
   background: #141311 !important;
   border-color: #141311 !important;
