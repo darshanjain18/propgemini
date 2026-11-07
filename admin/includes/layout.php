@@ -24,6 +24,7 @@ function adminNavIcon(string $name): string
         'guide' => "<svg {$attrs}><path d=\"M4 19.5A2.5 2.5 0 0 1 6.5 17H20\"/><path d=\"M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z\"/><path d=\"M8 7h8M8 11h6\"/></svg>",
         'news' => "<svg {$attrs}><path d=\"M4 5h16v14H4z\"/><path d=\"M8 9h8M8 13h5\"/></svg>",
         'gallery' => "<svg {$attrs}><rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\"/><path d=\"m3 15 5-4 4 3 3-2 6 5\"/></svg>",
+        'careers' => "<svg {$attrs}><path d=\"M8 7V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1\"/><rect x=\"4\" y=\"7\" width=\"16\" height=\"13\" rx=\"2\"/><path d=\"M4 13h16\"/></svg>",
         'logout' => "<svg {$attrs}><path d=\"M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4\"/><path d=\"M16 17l5-5-5-5M21 12H9\"/></svg>",
     ];
 
@@ -56,6 +57,7 @@ function adminLayoutStart(string $title, string $active = 'dashboard'): void
         <a class="<?= $active === 'news' ? 'is-active' : '' ?>" href="<?= h(adminUrl('news/index.php')) ?>"><?= adminNavIcon('news') ?><span>News</span></a>
         <a class="<?= $active === 'gallery' ? 'is-active' : '' ?>" href="<?= h(adminUrl('gallery/index.php')) ?>"><?= adminNavIcon('gallery') ?><span>Gallery</span></a>
         <a class="<?= $active === 'enquiries' ? 'is-active' : '' ?>" href="<?= h(adminUrl('enquiries/index.php')) ?>"><?= adminNavIcon('enquiries') ?><span>Enquiries</span></a>
+        <a class="<?= $active === 'careers' ? 'is-active' : '' ?>" href="<?= h(adminUrl('careers/index.php')) ?>"><?= adminNavIcon('careers') ?><span>Careers</span></a>
         <a class="<?= $active === 'visits' ? 'is-active' : '' ?>" href="<?= h(adminUrl('visits/index.php')) ?>"><?= adminNavIcon('visits') ?><span>Site visits</span></a>
         <a class="<?= $active === 'alerts' ? 'is-active' : '' ?>" href="<?= h(adminUrl('alerts.php')) ?>"><?= adminNavIcon('alerts') ?><span>Alerts</span></a>
         <a class="<?= $active === 'quality' ? 'is-active' : '' ?>" href="<?= h(adminUrl('quality.php')) ?>"><?= adminNavIcon('quality') ?><span>Listing quality</span></a>

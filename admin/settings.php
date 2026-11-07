@@ -19,7 +19,7 @@ $keys = [
     'social_instagram',
     'social_facebook',
     'social_linkedin',
-    'social_youtube',
+    'social_x',
     'careers_roles',
 ];
 
@@ -93,7 +93,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
                 'social_instagram' => cleanOptionalUrl((string) ($_POST['social_instagram'] ?? ''), 'Instagram'),
                 'social_facebook' => cleanOptionalUrl((string) ($_POST['social_facebook'] ?? ''), 'Facebook'),
                 'social_linkedin' => cleanOptionalUrl((string) ($_POST['social_linkedin'] ?? ''), 'LinkedIn'),
-                'social_youtube' => cleanOptionalUrl((string) ($_POST['social_youtube'] ?? ''), 'YouTube'),
+                'social_x' => cleanOptionalUrl((string) ($_POST['social_x'] ?? ''), 'X'),
                 'careers_roles' => trim((string) ($_POST['careers_roles'] ?? '')),
             ];
 
@@ -225,8 +225,8 @@ adminLayoutStart('Settings', 'settings');
                 <input id="social_linkedin" name="social_linkedin" value="<?= h($settings['social_linkedin'] ?? '') ?>" placeholder="https://linkedin.com/...">
             </div>
             <div class="field">
-                <label for="social_youtube">YouTube URL</label>
-                <input id="social_youtube" name="social_youtube" value="<?= h($settings['social_youtube'] ?? '') ?>" placeholder="https://youtube.com/...">
+                <label for="social_x">X (Twitter) URL</label>
+                <input id="social_x" name="social_x" value="<?= h($settings['social_x'] ?? ($settings['social_youtube'] ?? '')) ?>" placeholder="https://x.com/...">
             </div>
             <div class="field full">
                 <label for="careers_roles">Open roles</label>

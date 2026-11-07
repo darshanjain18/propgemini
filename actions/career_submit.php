@@ -8,14 +8,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
 
 require_once dirname(__DIR__) . '/includes/csrf.php';
 require_once dirname(__DIR__) . '/includes/functions.php';
+require_once dirname(__DIR__) . '/includes/careers.php';
 require_once dirname(__DIR__) . '/includes/notifications.php';
 require_once dirname(__DIR__) . '/includes/automations.php';
-require_once dirname(__DIR__) . '/config/database.php';
-require_once dirname(__DIR__) . '/admin/includes/upload.php';
 
 function careerRedirect(string $status): never
 {
-    header('Location: ' . webPath('pages/careers.php?status=' . rawurlencode($status)), true, 303);
+    header('Location: ' . webPath('pages/careers?status=' . rawurlencode($status)) . '#apply', true, 303);
     exit;
 }
 
@@ -23,24 +22,32 @@ if (!verifyCsrfToken($_POST['csrf_token'] ?? null)) {
     careerRedirect('error');
 }
 
+// Honeypot — treat as success to avoid signalling bots.
 if (trim((string) ($_POST['website'] ?? '')) !== '') {
     careerRedirect('success');
 }
 
 $name = trim((string) ($_POST['name'] ?? ''));
-$email = trim((string) ($_POST['email'] ?? ''));
+$email = strtolower(trim((string) ($_POST['email'] ?? '')));
+$countryCode = trim((string) ($_POST['country_code'] ?? '+91'));
 $phone = preg_replace('/\D+/', '', (string) ($_POST['phone'] ?? '')) ?? '';
 $role = trim((string) ($_POST['role'] ?? ''));
 $experience = trim((string) ($_POST['experience'] ?? ''));
+$notice = trim((string) ($_POST['notice_period'] ?? ''));
 $message = trim((string) ($_POST['message'] ?? ''));
-$allowedExperience = ['0-2', '2-4', '4-6', '6+'];
 
-$valid = $name !== '' && mb_strlen($name) <= 100
+if ($countryCode === '' || !preg_match('/^\+\d{1,4}$/', $countryCode)) {
+    $countryCode = '+91';
+}
+
+$valid = $name !== '' && mb_strlen($name) <= 120
     && filter_var($email, FILTER_VALIDATE_EMAIL)
-    && preg_match('/^\d{10}$/', $phone) === 1
-    && in_array($experience, $allowedExperience, true)
-    && $role !== '' && mb_strlen($role) <= 120
-    && $message !== '' && mb_strlen($message) <= 5000
+    && mb_strlen($email) <= 190
+    && preg_match('/^\d{8,15}$/', $phone) === 1
+    && in_array($role, careerRoleOptions(), true)
+    && ($experience === '' || in_array($experience, careerExperienceOptions(), true))
+    && ($notice === '' || in_array($notice, careerNoticeOptions(), true))
+    && mb_strlen($message) <= 5000
     && isset($_FILES['resume'])
     && (int) ($_FILES['resume']['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK;
 
@@ -48,44 +55,48 @@ if (!$valid) {
     careerRedirect('error');
 }
 
+if (recentCareerDuplicate($email, $phone, $role)) {
+    careerRedirect('duplicate');
+}
+
 try {
-    $resumePath = storeUploadedFile(
-        $_FILES['resume'],
-        'resumes',
-        [
-            'application/pdf',
-            'application/msword',
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        ],
-        8 * 1024 * 1024
-    );
+    $resume = storeCareerResume($_FILES['resume']);
 } catch (Throwable $e) {
+    error_log('Career resume upload failed: ' . $e->getMessage());
     careerRedirect('error');
 }
 
-$body = "Experience: {$experience} years\nRole: {$role}\nRésumé: " . webPath($resumePath) . "\n\n" . $message;
+$ip = $_SERVER['REMOTE_ADDR'] ?? null;
+$ua = substr((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 255);
 
 try {
-    $pdo = getDatabaseConnection();
-    $stmt = $pdo->prepare(
-        'INSERT INTO enquiries (name, email, phone, subject, message, whatsapp_consent, source)
-         VALUES (:name, :email, :phone, :subject, :message, 0, :source)'
-    );
-    $stmt->execute([
-        'name' => $name,
+    $id = createCareerApplication([
+        'full_name' => $name,
         'email' => $email,
+        'country_code' => $countryCode,
         'phone' => $phone,
-        'subject' => 'Career application: ' . $role,
-        'message' => $body,
-        'source' => 'careers',
+        'role' => $role,
+        'experience' => $experience !== '' ? $experience : null,
+        'notice_period' => $notice !== '' ? $notice : null,
+        'message' => $message !== '' ? $message : null,
+        'resume_path' => $resume['path'],
+        'resume_original_name' => $resume['original'],
+        'ip_address' => is_string($ip) ? $ip : null,
+        'user_agent' => $ua !== '' ? $ua : null,
     ]);
+
+    $summary = "Role: {$role}\nExperience: "
+        . ($experience !== '' ? $experience : '—')
+        . "\nNotice: " . ($notice !== '' ? $notice : '—')
+        . "\nPhone: {$countryCode} {$phone}\n\n"
+        . ($message !== '' ? $message : 'No additional note.');
 
     notifyLead([
         'type' => 'Career application',
         'name' => $name,
-        'phone' => $phone,
+        'phone' => $countryCode . ' ' . $phone,
         'email' => $email,
-        'message' => $body,
+        'message' => $summary,
         'source' => 'careers',
     ]);
 
@@ -94,8 +105,8 @@ try {
         'Career application: ' . $name,
         $role,
         'info',
-        'enquiry',
-        null
+        'career_application',
+        $id
     );
 
     careerRedirect('success');
