@@ -221,23 +221,10 @@ require dirname(__DIR__) . '/includes/navbar.php';
                                 <input id="emi-name" name="name" type="text" maxlength="100" autocomplete="name" required placeholder="Your full name">
                             </div>
 
-                            <div class="field country-field">
+                            <div class="field phone-field">
                                 <label for="emi-phone">Mobile Number *</label>
-                                <div class="phone-row">
-                                    <div class="country-pick">
-                                        <button class="country-current" type="button" aria-expanded="false">India +91 <span>⌄</span></button>
-                                        <div class="country-dropdown" hidden>
-                                            <input id="emi-country-search" class="country-search" type="text" placeholder="Search country or code" autocomplete="off" aria-label="Search country code">
-                                            <ul class="country-list">
-                                                <?php foreach (countryCodes() as [$country, $code]): ?>
-                                                    <li><button type="button" data-code="<?= h($code) ?>"><?= h($country) ?> <?= h($code) ?></button></li>
-                                                <?php endforeach; ?>
-                                            </ul>
-                                        </div>
-                                        <input type="hidden" name="country_code" value="+91" class="country-code">
-                                    </div>
-                                    <input id="emi-phone" name="phone" type="tel" inputmode="numeric" maxlength="10" pattern="\d{10}" placeholder="9876543210" required>
-                                </div>
+                                <input type="hidden" name="country_code" value="+91">
+                                <input id="emi-phone" name="phone" type="tel" inputmode="numeric" maxlength="10" pattern="\d{10}" placeholder="9876543210" required>
                             </div>
 
                             <div class="field">

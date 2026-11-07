@@ -484,14 +484,23 @@ document.querySelectorAll('.visit-form').forEach((form) => {
         if (!data.ok) return;
         const intent = form.querySelector('[name="intent"]').value;
         const propertyId = form.querySelector('[name="property_id"]').value;
+        const lockedProperty = form.dataset.lockedProperty || '';
         const token = form.querySelector('[name="csrf_token"]').value;
-        const countryCode = form.querySelector('[name="country_code"]').value;
-        const countryLabel = form.querySelector('.country-current').textContent.trim();
+        const countryCode = form.querySelector('[name="country_code"]')?.value || '+91';
+        const countryCurrent = form.querySelector('.country-current');
+        const countryLabel = countryCurrent ? countryCurrent.textContent.trim() : 'India +91';
         form.reset();
         form.querySelector('[name="csrf_token"]').value = token;
         form.querySelector('[name="intent"]').value = intent;
-        form.querySelector('[name="country_code"]').value = countryCode;
-        form.querySelector('.country-current').firstChild.textContent = countryLabel + ' ';
+        const countryHidden = form.querySelector('[name="country_code"]');
+        if (countryHidden) countryHidden.value = countryCode;
+        if (countryCurrent && countryCurrent.firstChild) {
+            countryCurrent.firstChild.textContent = countryLabel + ' ';
+        }
+        if (lockedProperty) {
+            const lockedInput = form.querySelector('[name="property_id"]');
+            if (lockedInput) lockedInput.value = lockedProperty;
+        }
         if (form.closest('#visitModal') && intent === 'brochure') {
             closeVisit();
             setTimeout(() => openBrochureAccess(data.property_id || propertyId, data.brochure_url || ''), 200);

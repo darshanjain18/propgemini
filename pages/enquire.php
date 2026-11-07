@@ -78,7 +78,6 @@ require dirname(__DIR__) . '/includes/navbar.php';
                         'property' => 'Search property...',
                         'message' => 'Tell us your requirements...',
                     ],
-                    'hide_country' => true,
                     'show_city' => true,
                     'cities' => ['Pune', 'Mumbai', 'Gurgaon'],
                     'button' => 'Send Enquiry <span aria-hidden="true">↗</span>',

@@ -22,7 +22,6 @@ require dirname(__DIR__) . '/includes/navbar.php';
             <h2>Your trusted partner in <em>luxury real estate</em></h2>
             <p><?= h($aboutBlurb) ?></p>
             <p class="about-lede">Our curated portfolio features refined homes from reputable developers, with clear guidance from first enquiry through site visit.</p>
-            <div class="about-signature"><span></span>PropGemini private desk</div>
         </div>
         <div class="about-visual">
             <div class="about-orbit" aria-hidden="true"></div>

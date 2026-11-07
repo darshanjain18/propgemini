@@ -12,9 +12,10 @@ require_once __DIR__ . '/properties.php';
  *   country_label?: string,
  *   button?: string,
  *   required_marks?: bool,
- *   hide_country?: bool,
  *   show_city?: bool,
- *   cities?: list<string>
+ *   cities?: list<string>,
+ *   hide_property?: bool,
+ *   locked_property?: bool
  * } $ui
  */
 function renderVisitFields(string $prefix, string $intent = 'visit', string $propertyId = '', array $ui = []): void
@@ -37,17 +38,21 @@ function renderVisitFields(string $prefix, string $intent = 'visit', string $pro
     ], $ui['placeholders'] ?? []);
 
     $formClass = trim('visit-form ' . (string) ($ui['form_class'] ?? ''));
-    $countryLabel = (string) ($ui['country_label'] ?? 'India +91');
     $buttonHtml = (string) ($ui['button'] ?? 'Send enquiry');
     $requiredMarks = (bool) ($ui['required_marks'] ?? false);
-    $hideCountry = (bool) ($ui['hide_country'] ?? false);
     $showCity = (bool) ($ui['show_city'] ?? false);
+    $hideProperty = (bool) ($ui['hide_property'] ?? false);
+    $lockedProperty = (bool) ($ui['locked_property'] ?? false) || $hideProperty;
     $cities = $ui['cities'] ?? ['Pune', 'Mumbai', 'Gurgaon'];
     $req = static function () use ($requiredMarks): string {
         return $requiredMarks ? ' <span class="req">*</span>' : '';
     };
+    $formAttrs = '';
+    if ($lockedProperty && $propertyId !== '') {
+        $formAttrs .= ' data-locked-property="' . h($propertyId) . '"';
+    }
     ?>
-    <form class="<?= h($formClass) ?>" method="post" action="<?= h(webPath('actions/visit_submit.php')) ?>" novalidate>
+    <form class="<?= h($formClass) ?>" method="post" action="<?= h(webPath('actions/visit_submit.php')) ?>" novalidate<?= $formAttrs ?>>
         <input type="hidden" name="csrf_token" value="<?= h(csrfToken()) ?>">
         <input type="hidden" name="intent" value="<?= h($intent) ?>">
         <div class="hp-field" aria-hidden="true">
@@ -58,28 +63,10 @@ function renderVisitFields(string $prefix, string $intent = 'visit', string $pro
             <label for="<?= h($prefix) ?>-name"><?= h($labels['name']) ?><?= $req() ?></label>
             <input id="<?= h($prefix) ?>-name" name="name" type="text" maxlength="100" autocomplete="name" placeholder="<?= h($placeholders['name']) ?>" required>
         </div>
-        <div class="field <?= $hideCountry ? 'phone-field' : 'country-field' ?>">
+        <div class="field phone-field">
             <label for="<?= h($prefix) ?>-phone"><?= h($labels['phone']) ?><?= $req() ?></label>
-            <?php if ($hideCountry): ?>
-                <input type="hidden" name="country_code" value="+91">
-                <input id="<?= h($prefix) ?>-phone" name="phone" type="tel" inputmode="numeric" maxlength="10" pattern="\d{10}" placeholder="<?= h($placeholders['phone']) ?>" required>
-            <?php else: ?>
-                <div class="phone-row">
-                    <div class="country-pick">
-                        <button class="country-current" type="button" aria-expanded="false"><?= h($countryLabel) ?> <span>⌄</span></button>
-                        <div class="country-dropdown" hidden>
-                            <input id="<?= h($prefix) ?>-country-search" class="country-search" type="text" placeholder="Search country or code" autocomplete="off" aria-label="Search country code">
-                            <ul class="country-list">
-                                <?php foreach (countryCodes() as [$country, $code]): ?>
-                                    <li><button type="button" data-code="<?= h($code) ?>"><?= h($country) ?> <?= h($code) ?></button></li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                        <input type="hidden" name="country_code" value="+91" class="country-code">
-                    </div>
-                    <input id="<?= h($prefix) ?>-phone" name="phone" type="tel" inputmode="numeric" maxlength="10" pattern="\d{10}" placeholder="<?= h($placeholders['phone']) ?>" required>
-                </div>
-            <?php endif; ?>
+            <input type="hidden" name="country_code" value="+91">
+            <input id="<?= h($prefix) ?>-phone" name="phone" type="tel" inputmode="numeric" maxlength="10" pattern="\d{10}" placeholder="<?= h($placeholders['phone']) ?>" required>
         </div>
         <div class="field email-field">
             <label for="<?= h($prefix) ?>-email"><?= h($labels['email']) ?><?= $req() ?></label>
@@ -112,22 +99,27 @@ function renderVisitFields(string $prefix, string $intent = 'visit', string $pro
                 <p class="visit-time-help">Choose a future date and time for your visit.</p>
             </div>
         <?php endif; ?>
-        <div class="field property-field">
-            <label for="<?= h($prefix) ?>-property-search"><?= h($labels['property']) ?></label>
-            <div class="property-pick">
-                <input
-                    id="<?= h($prefix) ?>-property-search"
-                    class="property-search"
-                    type="text"
-                    placeholder="<?= h($showCity ? 'Select a city first' : $placeholders['property']) ?>"
-                    data-open-placeholder="<?= h($placeholders['property']) ?>"
-                    autocomplete="off"
-                    <?= $showCity ? 'disabled' : '' ?>
-                >
-                <input type="hidden" name="property_id" value="<?= h($propertyId) ?>" class="property-id">
-                <ul class="property-results" hidden></ul>
+        <?php if ($hideProperty): ?>
+            <input type="hidden" name="property_id" value="<?= h($propertyId) ?>" class="property-id">
+        <?php else: ?>
+            <div class="field property-field">
+                <label for="<?= h($prefix) ?>-property-search"><?= h($labels['property']) ?></label>
+                <div class="property-pick"<?= $lockedProperty ? ' data-locked="true"' : '' ?>>
+                    <input
+                        id="<?= h($prefix) ?>-property-search"
+                        class="property-search"
+                        type="text"
+                        placeholder="<?= h($showCity ? 'Select a city first' : $placeholders['property']) ?>"
+                        data-open-placeholder="<?= h($placeholders['property']) ?>"
+                        autocomplete="off"
+                        <?= $showCity ? 'disabled' : '' ?>
+                        <?= $lockedProperty ? 'readonly' : '' ?>
+                    >
+                    <input type="hidden" name="property_id" value="<?= h($propertyId) ?>" class="property-id">
+                    <ul class="property-results" hidden></ul>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
         <div class="field ai-message-field">
             <label for="<?= h($prefix) ?>-message"><?= h($labels['message']) ?><?= $req() ?></label>
             <div class="ai-message-control">
