@@ -6,10 +6,11 @@ require_once __DIR__ . '/properties.php';
 $propertiesUrl = webPath('pages/properties.php');
 ?>
 <main>
-<section class="hero" id="home">
-    <img class="hero-img reveal-media" src="<?= h(webPath('public/images/hero.jpg')) ?>" alt="Architect-designed residence surrounded by landscaped grounds">
+<section class="hero" id="home" aria-label="PropGemini homepage hero">
+    <img class="hero-img reveal-media" src="<?= h(webPath('public/images/hero.jpg')) ?>" alt="Modern residential tower at dusk" width="1920" height="1080" decoding="async">
+    <div class="hero-arcs" aria-hidden="true"><span></span><span></span><span></span></div>
     <div class="wrap hero-content">
-        <div class="eyebrow reveal-item" data-reveal-delay="0">Property, reimagined</div>
+        <p class="eyebrow reveal-item" data-reveal-delay="0">Property, reimagined</p>
         <h1 class="reveal-item" data-reveal-delay="1">Exceptional homes.<br><em>Extraordinary living.</em></h1>
         <p class="reveal-item" data-reveal-delay="2">A considered collection of remarkable residences across Pune, Mumbai and Gurgaon. Discover architecture, addresses and spaces chosen for the way you want to live.</p>
         <div class="hero-actions reveal-item" data-reveal-delay="3">
