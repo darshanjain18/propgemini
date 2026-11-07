@@ -4,42 +4,98 @@ declare(strict_types=1);
 require_once __DIR__ . '/csrf.php';
 require_once __DIR__ . '/properties.php';
 
-function renderVisitFields(string $prefix, string $intent = 'visit', string $propertyId = ''): void
+/**
+ * @param array{
+ *   form_class?: string,
+ *   labels?: array<string, string>,
+ *   placeholders?: array<string, string>,
+ *   country_label?: string,
+ *   button?: string,
+ *   required_marks?: bool,
+ *   hide_country?: bool,
+ *   show_city?: bool,
+ *   cities?: list<string>
+ * } $ui
+ */
+function renderVisitFields(string $prefix, string $intent = 'visit', string $propertyId = '', array $ui = []): void
 {
+    $labels = array_merge([
+        'name' => 'Name',
+        'phone' => 'Contact number',
+        'email' => 'Email id',
+        'city' => 'City',
+        'property' => 'Property',
+        'message' => 'Message',
+    ], $ui['labels'] ?? []);
+
+    $placeholders = array_merge([
+        'name' => '',
+        'phone' => '9876543210',
+        'email' => '',
+        'property' => 'City, state, initials or property name',
+        'message' => 'Tell us what you would like to see',
+    ], $ui['placeholders'] ?? []);
+
+    $formClass = trim('visit-form ' . (string) ($ui['form_class'] ?? ''));
+    $countryLabel = (string) ($ui['country_label'] ?? 'India +91');
+    $buttonHtml = (string) ($ui['button'] ?? 'Send enquiry');
+    $requiredMarks = (bool) ($ui['required_marks'] ?? false);
+    $hideCountry = (bool) ($ui['hide_country'] ?? false);
+    $showCity = (bool) ($ui['show_city'] ?? false);
+    $cities = $ui['cities'] ?? ['Pune', 'Mumbai', 'Gurgaon'];
+    $req = static function () use ($requiredMarks): string {
+        return $requiredMarks ? ' <span class="req">*</span>' : '';
+    };
     ?>
-    <form class="visit-form" method="post" action="<?= h(webPath('actions/visit_submit.php')) ?>" novalidate>
+    <form class="<?= h($formClass) ?>" method="post" action="<?= h(webPath('actions/visit_submit.php')) ?>" novalidate>
         <input type="hidden" name="csrf_token" value="<?= h(csrfToken()) ?>">
         <input type="hidden" name="intent" value="<?= h($intent) ?>">
         <div class="hp-field" aria-hidden="true">
             <label for="<?= h($prefix) ?>-website">Website</label>
             <input id="<?= h($prefix) ?>-website" name="website" type="text" tabindex="-1" autocomplete="off">
         </div>
-        <div class="field">
-            <label for="<?= h($prefix) ?>-name">Name</label>
-            <input id="<?= h($prefix) ?>-name" name="name" type="text" maxlength="100" autocomplete="name" required>
+        <div class="field name-field">
+            <label for="<?= h($prefix) ?>-name"><?= h($labels['name']) ?><?= $req() ?></label>
+            <input id="<?= h($prefix) ?>-name" name="name" type="text" maxlength="100" autocomplete="name" placeholder="<?= h($placeholders['name']) ?>" required>
         </div>
-        <div class="field country-field">
-            <label for="<?= h($prefix) ?>-phone">Contact number</label>
-            <div class="phone-row">
-                <div class="country-pick">
-                    <button class="country-current" type="button" aria-expanded="false">India +91 <span>⌄</span></button>
-                    <div class="country-dropdown" hidden>
-                        <input id="<?= h($prefix) ?>-country-search" class="country-search" type="text" placeholder="Search country or code" autocomplete="off" aria-label="Search country code">
-                        <ul class="country-list">
-                            <?php foreach (countryCodes() as [$country, $code]): ?>
-                                <li><button type="button" data-code="<?= h($code) ?>"><?= h($country) ?> <?= h($code) ?></button></li>
-                            <?php endforeach; ?>
-                        </ul>
+        <div class="field <?= $hideCountry ? 'phone-field' : 'country-field' ?>">
+            <label for="<?= h($prefix) ?>-phone"><?= h($labels['phone']) ?><?= $req() ?></label>
+            <?php if ($hideCountry): ?>
+                <input type="hidden" name="country_code" value="+91">
+                <input id="<?= h($prefix) ?>-phone" name="phone" type="tel" inputmode="numeric" maxlength="10" pattern="\d{10}" placeholder="<?= h($placeholders['phone']) ?>" required>
+            <?php else: ?>
+                <div class="phone-row">
+                    <div class="country-pick">
+                        <button class="country-current" type="button" aria-expanded="false"><?= h($countryLabel) ?> <span>⌄</span></button>
+                        <div class="country-dropdown" hidden>
+                            <input id="<?= h($prefix) ?>-country-search" class="country-search" type="text" placeholder="Search country or code" autocomplete="off" aria-label="Search country code">
+                            <ul class="country-list">
+                                <?php foreach (countryCodes() as [$country, $code]): ?>
+                                    <li><button type="button" data-code="<?= h($code) ?>"><?= h($country) ?> <?= h($code) ?></button></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                        <input type="hidden" name="country_code" value="+91" class="country-code">
                     </div>
-                    <input type="hidden" name="country_code" value="+91" class="country-code">
+                    <input id="<?= h($prefix) ?>-phone" name="phone" type="tel" inputmode="numeric" maxlength="10" pattern="\d{10}" placeholder="<?= h($placeholders['phone']) ?>" required>
                 </div>
-                <input id="<?= h($prefix) ?>-phone" name="phone" type="tel" inputmode="numeric" maxlength="10" pattern="\d{10}" placeholder="9876543210" required>
+            <?php endif; ?>
+        </div>
+        <div class="field email-field">
+            <label for="<?= h($prefix) ?>-email"><?= h($labels['email']) ?><?= $req() ?></label>
+            <input id="<?= h($prefix) ?>-email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="<?= h($placeholders['email']) ?>" required>
+        </div>
+        <?php if ($showCity): ?>
+            <div class="field city-field">
+                <label for="<?= h($prefix) ?>-city"><?= h($labels['city']) ?><?= $req() ?></label>
+                <select id="<?= h($prefix) ?>-city" name="preferred_city" required>
+                    <option value="">Select city</option>
+                    <?php foreach ($cities as $city): ?>
+                        <option value="<?= h((string) $city) ?>"><?= h((string) $city) ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
-        </div>
-        <div class="field">
-            <label for="<?= h($prefix) ?>-email">Email id</label>
-            <input id="<?= h($prefix) ?>-email" name="email" type="email" maxlength="254" autocomplete="email" required>
-        </div>
+        <?php endif; ?>
         <?php if ($intent === 'visit'): ?>
             <div class="field visit-schedule">
                 <span class="field-label">Preferred site-visit date and time</span>
@@ -57,23 +113,31 @@ function renderVisitFields(string $prefix, string $intent = 'visit', string $pro
             </div>
         <?php endif; ?>
         <div class="field property-field">
-            <label for="<?= h($prefix) ?>-property-search">Property</label>
+            <label for="<?= h($prefix) ?>-property-search"><?= h($labels['property']) ?></label>
             <div class="property-pick">
-                <input id="<?= h($prefix) ?>-property-search" class="property-search" type="text" placeholder="City, state, initials or property name" autocomplete="off">
+                <input
+                    id="<?= h($prefix) ?>-property-search"
+                    class="property-search"
+                    type="text"
+                    placeholder="<?= h($showCity ? 'Select a city first' : $placeholders['property']) ?>"
+                    data-open-placeholder="<?= h($placeholders['property']) ?>"
+                    autocomplete="off"
+                    <?= $showCity ? 'disabled' : '' ?>
+                >
                 <input type="hidden" name="property_id" value="<?= h($propertyId) ?>" class="property-id">
                 <ul class="property-results" hidden></ul>
             </div>
         </div>
         <div class="field ai-message-field">
-            <label for="<?= h($prefix) ?>-message">Message</label>
+            <label for="<?= h($prefix) ?>-message"><?= h($labels['message']) ?><?= $req() ?></label>
             <div class="ai-message-control">
-                <textarea id="<?= h($prefix) ?>-message" name="message" maxlength="5000" required placeholder="Tell us what you would like to see"></textarea>
+                <textarea id="<?= h($prefix) ?>-message" name="message" maxlength="5000" required placeholder="<?= h($placeholders['message']) ?>"></textarea>
                 <span class="ai-message-icon" aria-hidden="true">↗</span>
             </div>
             <p class="ai-message-help">Press Shift + Enter for a new line.</p>
         </div>
         <p class="form-status" role="status"></p>
-        <button class="btn send-btn" type="submit">Send enquiry</button>
+        <button class="btn send-btn" type="submit"><?= $buttonHtml ?></button>
     </form>
     <?php
 }

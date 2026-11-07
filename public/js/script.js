@@ -270,7 +270,7 @@ document.querySelectorAll('.property-pick').forEach((pick) => {
     const hidden = pick.querySelector('.property-id');
     const list = pick.querySelector('.property-results');
     const openPlaceholder = search.dataset.openPlaceholder || 'Search by name or area';
-    const lockedPlaceholder = 'Select a preferred city first';
+    const lockedPlaceholder = search.dataset.lockedPlaceholder || 'Select a city first';
     const selectedCity = () => (citySelect?.value || '').trim();
     const cityReady = () => !citySelect || selectedCity() !== '';
 
