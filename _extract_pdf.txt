@@ -1,0 +1,275 @@
+﻿=== PDF EXTRACT ===
+Pages: 6
+--- Page 1 ---
+Real Estate Website – Deliverables Report  |  Page 1 
+Real Estate Website 
+Project Deliverables Report & Functional Workflow 
+Prepared for client review  |  Timeline: 1 week 
+1. Document Purpose 
+This report lists everything that I will be making and delivering to the client for the real estate 
+website, and describes how each feature works as a visitor and admin workflow. It covers the 
+feature set, main navigation, page-level functionality, enquiry handling, the admin dashboard, data 
+structure, validations, the 1-week timeline and the final end-to-end system flow. 
+2. Scope of Deliverables 
+• Public website with the six-item main navigation (Home, Projects, About, Contact, EMI 
+Calculator, Enquire Now). 
+• Advanced property search and filtering with dedicated property detail pages. 
+• Home-loan EMI calculator. 
+• Enquiry channels: property-specific Enquire Now, WhatsApp enquiry, Request Site Visit form 
+and general contact form. 
+• Rich property content: floor plans, blueprints, carpet area, amenities, photo galleries, videos, 
+interactive location maps, downloadable brochures, construction status and possession 
+details. 
+• Admin dashboard (1 admin user) to manage properties, prices, images, brochures and project 
+details without editing code. 
+3. Services Provided From My Side 
+• Maintenance and technical support: 1 year service 
+• Backend support: 1 year 
+• SSL certificate: Included (for security) 
+• SEO: Search engine optimisation for visibility on Google search engine 
+• 1 domain for 1 year 
+• Customized Emails 
+4. Feature Comparison Table 
+The table compares each feature by what the visitor gets and what the client can control from the 
+admin dashboard. 
+Feature What the Visitor Gets Client Control (Admin) 
+Advanced property 
+search & filtering 
+Narrow listings by criteria such as location, 
+type, budget, bedrooms and status 
+Filter values driven by property data 
+entered in admin 
+Dedicated property 
+detail pages 
+One full page per property with all project 
+information 
+Create, edit, publish or unpublish 
+each page 
+--- Page 2 ---
+Real Estate Website – Deliverables Report  |  Page 2 
+Feature What the Visitor Gets Client Control (Admin) 
+EMI calculator Instant monthly EMI estimate for a home 
+loan 
+Default values and ranges can be 
+configured 
+Property-specific 
+Enquire Now button 
+Enquiry form linked to the property being 
+viewed; the enquiry also goes to WhatsApp 
+Enquiries arrive tagged with property 
+name 
+WhatsApp enquiry 
+integration 
+One-tap WhatsApp chat with a pre-filled 
+property message 
+Business WhatsApp number 
+managed centrally 
+Request Site Visit form Book a preferred date and time to visit a 
+project 
+Visit requests listed with status 
+tracking 
+Floor plans, blueprints 
+& carpet area 
+Layout drawings and area details per unit 
+type 
+Upload and replace plans and area 
+figures 
+Amenities, photo 
+galleries & videos 
+Visual and facility overview of the project Manage amenity list, images and 
+video links 
+Interactive location 
+maps 
+Map showing exact project location and 
+surroundings 
+Set location per property 
+Downloadable 
+brochures 
+PDF brochure download for offline 
+reference 
+Upload and replace brochure files 
+Construction status & 
+possession details 
+Current progress and expected possession 
+date 
+Update status and dates as work 
+progresses 
+Admin dashboard Always up-to-date content on the website Manage everything without editing 
+code 
+ 
+5. Main Navigation Bar 
+Home  |  Projects  |  About  |  Contact  |  EMI Calculator  |  Enquire Now  
+Menu Item Purpose 
+Home Introduces the company and highlights featured properties. 
+Projects Opens the property listing and search page. 
+About Explains the company, its services and credibility. 
+Contact Displays contact information and the general enquiry form. 
+EMI Calculator Opens a dedicated home-loan EMI calculator. 
+Enquire Now Directs users to the enquiry form or contact options. Enquiries also go to WhatsApp.  
+ 
+6. High-Level Website Workflow 
+The recommended visitor journey is: 
+Home → Featured Property / Projects → Search & Filter → Property Detail Page → EMI 
+Calculation → Enquire Now / WhatsApp / Site Visit → Admin Follow-up → Site Visit  
+7. Module Structure 
+--- Page 3 ---
+Real Estate Website – Deliverables Report  |  Page 3 
+Module Main Screens Core Output 
+Home Hero banner, featured properties, 
+highlights 
+Brand introduction and entry to listings 
+Projects Listing grid, search bar, filter panel Searchable property catalogue 
+Property Detail Overview, plans, gallery, map, status Complete project information 
+About Company story, services, credibility Trust building 
+Contact Contact details, general enquiry form General enquiries 
+EMI Calculator Loan inputs and result view Monthly EMI estimate 
+Enquiries Enquire Now, WhatsApp, Site Visit Customer enquiries 
+Admin Dashboard Properties, media, brochures, enquiries Code-free content management 
+ 
+8. Projects Page: Search & Filtering Workflow 
+Open Projects → Enter keyword / choose filters → Results refresh → Sort → Open Property 
+Detail Page 
+• Advanced search by project name, location or keyword. 
+• Filters such as location, property type, budget range, bedrooms/configuration, carpet area and 
+construction status. 
+• Each result card shows image, name, location, starting price, configuration and status, with a 
+link to the detail page. 
+• Clear-all option and a friendly message when no properties match. 
+• Only properties marked Published in the admin dashboard appear in results. 
+9. Property Detail Page 
+Every property has a dedicated page. Content blocks appear in the following order: 
+Section Content 
+Overview Project name, location, developer, price range, configuration and key 
+highlights. 
+Enquiry actions Property-specific Enquire Now button, WhatsApp enquiry and Request Site 
+Visit. 
+Floor plans & blueprints Unit-wise floor plans and blueprints with carpet area for each type. 
+Photo gallery & videos Project images and walkthrough or promotional videos. 
+Amenities Icon-based list of project facilities. 
+Location map Interactive map showing the project and surrounding landmarks. 
+Construction status & 
+possession 
+Current progress stage and expected possession date. 
+Brochure Downloadable PDF brochure. 
+EMI shortcut Link to the EMI calculator, optionally pre-filled with the property price. 
+ 
+--- Page 4 ---
+Real Estate Website – Deliverables Report  |  Page 4 
+10. EMI Calculator Workflow 
+Enter Loan Amount → Interest Rate → Tenure → Calculate → View EMI, Total Interest and Total 
+Payable → Enquire Now 
+EMI = P × r × (1 + r)^n ÷ ((1 + r)^n − 1), where P is the loan amount, r is the monthly interest 
+rate (annual rate ÷ 12 ÷ 100) and n is the tenure in months. 
+• Inputs: loan amount, annual interest rate and loan tenure (years). 
+• Outputs: monthly EMI, total interest payable and total amount payable. 
+• Values update instantly as the user changes sliders or inputs. 
+• Available as a dedicated page from the main navigation. 
+11. Enquiry Workflow 
+Channel User Action System Action 
+Enquire Now (property-
+specific) 
+Fills name, phone, email and message 
+on a property page 
+Saves the enquiry tagged with the 
+property and sends it to WhatsApp 
+Enquire Now (main 
+navigation) 
+Clicks Enquire Now in the navigation bar 
+and submits the form 
+Saves the enquiry and sends it to 
+WhatsApp 
+WhatsApp enquiry Taps the WhatsApp button Opens WhatsApp with a pre-filled 
+message naming the property 
+Request Site Visit Submits name, phone, property, 
+preferred date and time 
+Creates a site visit request with 
+status Pending 
+General contact form Submits a general query from the 
+Contact page 
+Saves as General Enquiry and 
+notifies admin 
+ 
+Form validations 
+• Name and a valid phone number are mandatory; email format is checked where provided. 
+• Site visit date cannot be in the past. 
+• Spam protection (CAPTCHA or honeypot) on all forms. 
+• On submit, the user sees a confirmation message. 
+12. Enquiry Management Workflow 
+New → Contacted → Site Visit Scheduled → Visited → Closed  
+• Every enquiry and site visit request is stored with source, property, date and contact details. 
+• Admin can update status, add notes and filter enquiries by property, source or status. 
+• Admin is notified of each new enquiry by email and on WhatsApp. 
+13. Admin Dashboard 
+One admin user will be created for the client. The admin dashboard lets the client manage 
+properties, prices, images, brochures and project details without editing code. 
+Admin Function What the Admin Can Do 
+Property management Add, edit, publish, unpublish or delete properties and mark featured ones for 
+the home page. 
+--- Page 5 ---
+Real Estate Website – Deliverables Report  |  Page 5 
+Admin Function What the Admin Can Do 
+Price management Update starting price, price per unit type and price ranges. 
+Image & gallery 
+management 
+Upload, reorder and remove photos; add video links. 
+Brochure management Upload or replace downloadable brochures. 
+Project details Edit description, amenities, floor plans, carpet area, location and map pin.  
+Construction & possession Update construction status and possession date. 
+Enquiry view View, filter and update enquiries and site visit requests. 
+Site settings Manage contact details, WhatsApp number and About page content. 
+Admin access Single admin user with secure login. 
+ 
+14. Key Data Entities 
+• Property: name, slug, location, type, price, status, featured flag, description, possession date. 
+• Unit Type: belongs to a property; configuration, carpet area, price, floor plan file. 
+• Media: images and videos linked to a property, with display order. 
+• Amenity: master list linked to properties. 
+• Brochure: file linked to a property. 
+• Enquiry: name, phone, email, message, source, property and status. 
+• Site Visit Request: contact details, property, preferred date/time and status. 
+• Admin User: one login account. 
+15. Important Business Rules & Validations 
+• Only published properties are visible on the public website. 
+• Every property must have a name, location, price and at least one image before publishing. 
+• Uploaded files are restricted by type (images, video, PDF) and size. 
+• Admin area is protected by login and the SSL certificate secures all traffic. 
+• The site is responsive across mobile, tablet and desktop. 
+• Pages are search-engine friendly, with clean URLs and meta titles per property. 
+• Contact numbers and WhatsApp links work from a single configurable setting. 
+16. Development Timeline (1 Week) 
+The whole project will be completed in 1 week, planned day by day: 
+Day Scope Priority 
+Day 1 Design, layout, navigation bar, Home, About and Contact pages High 
+Day 2 Property data model, admin login (1 admin user) and property 
+management 
+High 
+Day 3 Projects listing, search and filters, property detail pages High 
+Day 4 Floor plans, gallery, videos, amenities, maps, brochures, construction 
+status 
+High 
+--- Page 6 ---
+Real Estate Website – Deliverables Report  |  Page 6 
+Day Scope Priority 
+Day 5 EMI calculator, Enquire Now with WhatsApp, WhatsApp enquiry, Site 
+Visit form 
+High 
+Day 6 SEO setup, domain and SSL setup, testing and fixes High 
+Day 7 Deployment, admin walkthrough and handover High 
+ 
+17. End-to-End Example 
+1) A visitor lands on Home, sees a featured property and opens Projects. 
+2) They filter by location and budget and open a property detail page. 
+3) They review floor plans, carpet area, gallery, amenities, map and possession status, and 
+download the brochure. 
+4) They use the EMI calculator to check affordability. 
+5) They tap Enquire Now, WhatsApp enquiry or Request Site Visit. The enquiry reaches the client on 
+WhatsApp and in the admin dashboard. 
+6) The admin follows up and updates the enquiry status. As the project progresses, the admin 
+updates construction status and prices from the dashboard with no code changes. 
+18. Final Recommended System Flow 
+ADMIN SETUP: Login → Add Property → Prices → Images/Videos → Floor Plans → Amenities → 
+Map → Brochure → Construction Status → Publish  
+VISITOR: Home → Projects → Search & Filter → Property Detail → EMI Calculator  
+ENQUIRY: Enquire Now / WhatsApp / Request Site Visit / Contact Form → Sent to WhatsApp and 
+Admin Dashboard 
+FOLLOW-UP: Enquiry Review → Contact → Site Visit  
