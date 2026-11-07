@@ -69,7 +69,6 @@ $year = (int) date('Y');
             <?php endif; ?>
             <p class="footer-cities-line">Pune · Mumbai · Gurgaon</p>
             <?php if ($contact['has_whatsapp']): ?>
-                <a class="footer-whatsapp" href="<?= h(whatsappTrackUrl('footer')) ?>" target="_blank" rel="noopener" aria-label="Chat with PropGemini on WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp</a>
             <?php endif; ?>
             <a class="footer-enquire-link" href="<?= h($enquire['href']) ?>">Start an enquiry <span>↗</span></a>
         </div>
