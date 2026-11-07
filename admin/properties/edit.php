@@ -243,7 +243,7 @@ adminLayoutStart($id > 0 ? 'Edit property' : 'Add property', 'properties');
                 <textarea id="overview" name="overview"><?= h((string) ($property['overview'] ?? '')) ?></textarea>
             </div>
             <div class="field full checks">
-                <label><input type="checkbox" name="is_featured" value="1"<?= (int) $property['is_featured'] ? ' checked' : '' ?>> Featured on home</label>
+                <label><input type="checkbox" name="is_featured" value="1"<?= (int) $property['is_featured'] ? ' checked' : '' ?>> Featured project (Projects page + home rail)</label>
                 <label><input type="checkbox" name="is_active" value="1"<?= (int) $property['is_active'] ? ' checked' : '' ?>> Active</label>
             </div>
         </div>

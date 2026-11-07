@@ -73,7 +73,7 @@ function showToast(message){const t=document.getElementById('toast');if(!t)retur
 })();
 
 const emiForm = document.getElementById('emiCalculator');
-if (emiForm) {
+if (emiForm && !document.body.classList.contains('emi-page')) {
     const pairs = [
         [document.getElementById('loanAmount'), document.getElementById('loanAmountInput')],
         [document.getElementById('interestRate'), document.getElementById('interestRateInput')],
@@ -264,31 +264,80 @@ function propertyMatches(item, query) {
 }
 
 document.querySelectorAll('.property-pick').forEach((pick) => {
+    const form = pick.closest('form');
+    const citySelect = form?.querySelector('[name="preferred_city"]');
     const search = pick.querySelector('.property-search');
     const hidden = pick.querySelector('.property-id');
     const list = pick.querySelector('.property-results');
-    const chosen = propertyIndex.find((item) => item.id === hidden.value);
-    if (chosen) search.value = `${chosen.name} · ${chosen.city}`;
+    const openPlaceholder = search.dataset.openPlaceholder || 'Search by name or area';
+    const lockedPlaceholder = 'Select a preferred city first';
+    const selectedCity = () => (citySelect?.value || '').trim();
+    const cityReady = () => !citySelect || selectedCity() !== '';
+
+    function syncCityGate() {
+        if (!citySelect) return;
+        const ready = cityReady();
+        search.disabled = !ready;
+        search.placeholder = ready ? openPlaceholder : lockedPlaceholder;
+        if (!ready) {
+            hidden.value = '';
+            search.value = '';
+            list.hidden = true;
+        }
+    }
+
     function show(query) {
-        const matches = propertyIndex.filter((item) => query === '' || propertyMatches(item, query)).slice(0, 8);
+        if (!cityReady()) {
+            list.hidden = true;
+            return;
+        }
+        const city = selectedCity();
+        const pool = city
+            ? propertyIndex.filter((item) => String(item.city || '').toLowerCase() === city.toLowerCase())
+            : propertyIndex;
+        const matches = pool.filter((item) => query === '' || propertyMatches(item, query)).slice(0, 8);
         list.innerHTML = matches.map((item) => `<li><button type="button" data-id="${item.id}">${item.name} · ${item.area}, ${item.city}</button></li>`).join('');
         list.hidden = matches.length === 0;
     }
+
+    const chosen = propertyIndex.find((item) => item.id === hidden.value);
+    if (chosen) {
+        if (!citySelect || !selectedCity() || chosen.city.toLowerCase() === selectedCity().toLowerCase()) {
+            search.value = `${chosen.name} · ${chosen.city}`;
+        }
+    }
+
     search.addEventListener('focus', () => {
+        if (!cityReady()) {
+            list.hidden = true;
+            citySelect?.focus();
+            return;
+        }
         if (!pick.dataset.locked) show(search.value.trim().toLowerCase());
     });
     search.addEventListener('input', () => {
-        if (pick.dataset.locked) return;
+        if (pick.dataset.locked || !cityReady()) return;
         hidden.value = '';
         show(search.value.trim().toLowerCase());
     });
     list.addEventListener('click', (event) => {
         const button = event.target.closest('button');
-        if (!button) return;
+        if (!button || button.disabled) return;
         hidden.value = button.dataset.id;
         search.value = button.textContent;
         list.hidden = true;
     });
+    citySelect?.addEventListener('change', () => {
+        hidden.value = '';
+        search.value = '';
+        list.hidden = true;
+        syncCityGate();
+        if (cityReady() && !pick.dataset.locked) {
+            search.focus();
+            show('');
+        }
+    });
+    syncCityGate();
 });
 
 document.querySelectorAll('.country-pick').forEach((pick) => {

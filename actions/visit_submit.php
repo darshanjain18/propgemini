@@ -65,12 +65,29 @@ if ($intent === 'visit') {
     }
 }
 $message = trim((string) $_POST['message']);
+$preferredCity = trim((string) ($_POST['preferred_city'] ?? ''));
+$propertyType = trim((string) ($_POST['property_type'] ?? ''));
+$budgetRange = trim((string) ($_POST['budget_range'] ?? ''));
+$contextBits = [];
+if ($preferredCity !== '') {
+    $contextBits[] = 'Preferred city: ' . $preferredCity;
+}
+if ($propertyType !== '') {
+    $contextBits[] = 'Property type: ' . $propertyType;
+}
+if ($budgetRange !== '') {
+    $contextBits[] = 'Budget: ' . $budgetRange;
+}
+if ($contextBits !== []) {
+    $message = implode('. ', $contextBits) . '. ' . $message;
+}
 if ($property) {
     $message = 'Property: ' . $property['name'] . ' (' . $property['area'] . ', ' . $property['city'] . '). ' . $message;
 }
 if ($when !== '') {
     $message = 'Preferred time: ' . $when . ($time !== '' ? ' ' . $time : '') . '. ' . $message;
 }
+$whatsappConsent = isset($_POST['whatsapp_consent']) ? 1 : 0;
 
 $name = trim((string) $_POST['name']);
 $email = trim((string) $_POST['email']);
@@ -83,7 +100,7 @@ try {
 
     $stmt = $pdo->prepare(
         'INSERT INTO enquiries (name, email, phone, subject, message, whatsapp_consent, source, property_id)
-         VALUES (:name, :email, :phone, :subject, :message, 0, :source, :property_id)'
+         VALUES (:name, :email, :phone, :subject, :message, :consent, :source, :property_id)'
     );
     $stmt->execute([
         'name' => $name,
@@ -91,7 +108,8 @@ try {
         'phone' => $fullPhone,
         'subject' => $_POST['subject'],
         'message' => $message,
-        'source' => 'visit-form',
+        'consent' => $whatsappConsent,
+        'source' => $whatsappConsent ? 'visit-form-whatsapp' : 'visit-form',
         'property_id' => $dbPropertyId,
     ]);
 

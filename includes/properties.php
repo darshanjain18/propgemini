@@ -290,11 +290,10 @@ function featuredProperty(): ?array
     $stmt = $pdo->query(propertySelectSql('p.is_featured = 1', 'p.sort_order ASC, p.id ASC') . ' LIMIT 1');
     $row = $stmt->fetch();
     if ($row === false) {
-        $list = properties();
-        return $list[0] ?? null;
+        return null;
     }
 
-    return mapPropertyRow($row);
+    return mapPropertyRow($row, true);
 }
 
 function featuredProperties(int $limit = 6): array

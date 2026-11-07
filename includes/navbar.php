@@ -7,8 +7,8 @@ $items = navItems();
 $homeUrl = $items[0]['href'];
 $enquireUrl = $items[array_key_last($items)]['href'];
 ?>
-<div class="site-bar">
 <div class="announcement">आगे बढ़ते रहो <span class="announcement-sep">|</span> Keep Progressing</div>
+<div class="site-bar">
 <header class="nav">
     <a class="brand" href="<?= h($homeUrl) ?>" aria-label="PropGemini home">
         <img class="brand-mark" src="<?= h(webPath('public/images/logo-mark.png')) ?>" alt="" width="36" height="36" decoding="async">
