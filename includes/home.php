@@ -156,38 +156,62 @@ $propertiesUrl = webPath('pages/properties.php');
         </div>
     </div>
 </section>
-<section class="section wrap">
-    <div class="section-head reveal-block"><div><div class="eyebrow">Explore by intention</div><h2>A place for every plan.</h2></div></div>
-    <div class="categories">
-        <a href="<?= h($propertiesUrl . '?type=Apartment') ?>" class="category reveal-item"><span class="num">01 / RESIDENTIAL</span><h3>Luxury apartments</h3><span class="go">↗</span></a>
-        <a href="<?= h($propertiesUrl . '?type=Villa') ?>" class="category reveal-item"><span class="num">02 / PRIVATE LIVING</span><h3>Villas &amp; homes</h3><span class="go">↗</span></a>
-        <a href="<?= h($propertiesUrl . '?type=Apartment') ?>" class="category reveal-item"><span class="num">03 / ELEVATED LIVING</span><h3>Penthouses</h3><span class="go">↗</span></a>
-        <a href="<?= h($propertiesUrl . '?type=Commercial') ?>" class="category reveal-item"><span class="num">04 / BUSINESS</span><h3>Commercial spaces</h3><span class="go">↗</span></a>
-        <a href="<?= h($propertiesUrl . '?type=Commercial') ?>" class="category reveal-item"><span class="num">05 / WORKPLACE</span><h3>Office properties</h3><span class="go">↗</span></a>
-        <a href="<?= h(webPath('pages/enquire.php')) ?>" class="category reveal-item"><span class="num">06 / YOUR NEXT MOVE</span><h3>Investment enquiries</h3><span class="go">↗</span></a>
-    </div>
-</section>
-<section class="section why" id="about">
-    <div class="why-motion" aria-hidden="true">
-        <div class="enquire-aurora"></div>
-        <div class="enquire-mesh"></div>
-        <div class="enquire-float enquire-float-a"></div>
-        <div class="enquire-float enquire-float-b"></div>
-        <div class="enquire-float enquire-float-c"></div>
-    </div>
-    <div class="wrap why-grid">
-        <div class="why-image reveal-media">
-            <img loading="lazy" src="<?= h(webPath('public/images/meridian.jpg')) ?>" alt="Calm contemporary interior">
-            <div class="image-note">A better way<br>to decide.</div>
+<section class="pg-home-why" id="about" aria-labelledby="pg-home-why-heading">
+    <div class="wrap pg-home-why-inner">
+        <div class="pg-home-why-media reveal-media">
+            <div class="pg-home-why-frame">
+                <span class="pg-home-why-outline" aria-hidden="true"></span>
+                <div class="pg-home-why-photo">
+                    <img loading="lazy" src="<?= h(webPath('public/images/property-spotlight-luxury-interior.jpg')) ?>" alt="Luxury living room interior" width="900" height="1100" decoding="async">
+                </div>
+                <p class="pg-home-why-caption">A smarter way to buy luxury real estate.</p>
+            </div>
         </div>
-        <div>
-            <div class="eyebrow reveal-item">The PropGemini approach</div>
-            <h2 class="reveal-item">More than a property search.</h2>
-            <div class="benefits">
-                <div class="benefit reveal-item"><span class="num">01 — DISCOVER</span><h3>Curated opportunities</h3><p>Explore relevant options without unnecessary clutter.</p></div>
-                <div class="benefit reveal-item"><span class="num">02 — UNDERSTAND</span><h3>Local perspective</h3><p>Consider neighbourhoods, connectivity and everyday convenience.</p></div>
-                <div class="benefit reveal-item"><span class="num">03 — PERSONALISE</span><h3>Guidance that listens</h3><p>Focus the search around your needs, budget and priorities.</p></div>
-                <div class="benefit reveal-item"><span class="num">04 — MOVE FORWARD</span><h3>Support at each step</h3><p>Get help navigating the enquiry and property discovery process.</p></div>
+
+        <div class="pg-home-why-content">
+            <p class="pg-home-why-kicker reveal-item">Why choose PropGemini</p>
+            <h2 id="pg-home-why-heading" class="reveal-item">Your Trusted Partner in <em>Luxury Real Estate.</em></h2>
+
+            <div class="pg-home-why-cards">
+                <article class="pg-home-why-card reveal-item" data-reveal-delay="0">
+                    <span class="pg-home-why-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="10.2" r="6.4"/><path d="m9.2 16.2 2.8-1.4 2.8 1.4v4.2l-2.8-1.5-2.8 1.5z"/><path d="m10.1 10.2 1.3 1.3 2.6-2.7"/></svg>
+                    </span>
+                    <div>
+                        <h3>RERA Certified Projects</h3>
+                        <p>Invest with confidence in RERA-registered developments.</p>
+                    </div>
+                </article>
+
+                <article class="pg-home-why-card reveal-item" data-reveal-delay="1">
+                    <span class="pg-home-why-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 20.5s-6.2-5.1-6.2-9.4a6.2 6.2 0 1 1 12.4 0c0 4.3-6.2 9.4-6.2 9.4Z"/><circle cx="12" cy="11.1" r="2.2"/></svg>
+                    </span>
+                    <div>
+                        <h3>Premium Locations</h3>
+                        <p>Handpicked properties in Mumbai, Pune and Gurgaon's prime areas.</p>
+                    </div>
+                </article>
+
+                <article class="pg-home-why-card reveal-item" data-reveal-delay="0">
+                    <span class="pg-home-why-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><rect x="4.5" y="11.5" width="15" height="7.5" rx="1.2"/><rect x="6.5" y="7.2" width="11" height="4.3" rx="1"/><rect x="8.5" y="3.8" width="7" height="3.4" rx=".9"/></svg>
+                    </span>
+                    <div>
+                        <h3>Verified Properties</h3>
+                        <p>Thoroughly vetted projects with transparent details and updated status.</p>
+                    </div>
+                </article>
+
+                <article class="pg-home-why-card reveal-item" data-reveal-delay="1">
+                    <span class="pg-home-why-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M4.8 14.2v-1.4a7.2 7.2 0 0 1 14.4 0v1.4"/><path d="M4.8 14.2h2.3v4.2H4.8z"/><path d="M16.9 14.2h2.3v4.2h-2.3z"/><path d="M12 19.2h2.4a2.1 2.1 0 0 0 2.1-2.1v-.8"/></svg>
+                    </span>
+                    <div>
+                        <h3>End-to-End Support</h3>
+                        <p>From site visits and financing to booking and post-sales assistance.</p>
+                    </div>
+                </article>
             </div>
         </div>
     </div>
@@ -217,16 +241,65 @@ $propertiesUrl = webPath('pages/properties.php');
         </div>
     </div>
 </section>
-<section class="section wrap">
-    <div class="reveal-block">
-        <div class="eyebrow">A clearer path forward</div>
-        <h2>From first search<br>to the right decision.</h2>
+<section class="pg-home-path" aria-labelledby="pg-home-path-heading">
+    <div class="pg-home-path-arch" aria-hidden="true">
+        <svg viewBox="0 0 460 340" fill="none" focusable="false">
+            <path d="M52 292V152l178-108 178 108v140" stroke="currentColor" stroke-width="1.15"/>
+            <path d="M104 292V178h118v114M246 292V164h118v128" stroke="currentColor" stroke-width="1.15"/>
+            <path d="M138 210h50M138 236h50M138 262h50M278 196h50M278 222h50M278 248h50" stroke="currentColor" stroke-width="1.05"/>
+            <path d="M230 44v34M214 78h32" stroke="currentColor" stroke-width="1.05"/>
+            <path d="M188 112h84v28h-84z" stroke="currentColor" stroke-width="1.05"/>
+            <path d="M52 292h356" stroke="currentColor" stroke-width="1.15"/>
+        </svg>
     </div>
-    <div class="steps">
-        <div class="step reveal-item"><div class="n">01</div><h3>Tell us what you need</h3><p>Share your preferred location, budget and requirements.</p></div>
-        <div class="step reveal-item"><div class="n">02</div><h3>Explore relevant options</h3><p>Review properties aligned with your priorities.</p></div>
-        <div class="step reveal-item"><div class="n">03</div><h3>Build your shortlist</h3><p>Compare the details that matter to your decision.</p></div>
-        <div class="step reveal-item"><div class="n">04</div><h3>Move forward with clarity</h3><p>Connect with an advisor to discuss your next steps.</p></div>
+    <div class="wrap pg-home-path-inner">
+        <header class="pg-home-path-head reveal-block">
+            <p class="pg-home-path-kicker">A clearer path forward</p>
+            <h2 id="pg-home-path-heading">From first search<br>to the <em>right decision.</em></h2>
+        </header>
+
+        <ol class="pg-home-path-track">
+            <li class="pg-home-path-step reveal-item" data-reveal-delay="0">
+                <span class="pg-home-path-badge" aria-hidden="true">01</span>
+                <article class="pg-home-path-card">
+                    <span class="pg-home-path-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-6.5-5.4-6.5-10a6.5 6.5 0 1 1 13 0c0 4.6-6.5 10-6.5 10Z"/><circle cx="12" cy="11" r="2.2"/></svg>
+                    </span>
+                    <h3>Tell us what you need</h3>
+                    <p>Share your preferred location, budget and requirements.</p>
+                </article>
+            </li>
+            <li class="pg-home-path-step reveal-item" data-reveal-delay="1">
+                <span class="pg-home-path-badge" aria-hidden="true">02</span>
+                <article class="pg-home-path-card">
+                    <span class="pg-home-path-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M5 17.5h14"/><path d="M6.5 17.5V13h11v4.5"/><path d="M8 13V9h8v4"/><path d="M9.5 9V5.5h5V9"/></svg>
+                    </span>
+                    <h3>Explore relevant options</h3>
+                    <p>Review properties aligned with your priorities.</p>
+                </article>
+            </li>
+            <li class="pg-home-path-step reveal-item" data-reveal-delay="2">
+                <span class="pg-home-path-badge" aria-hidden="true">03</span>
+                <article class="pg-home-path-card">
+                    <span class="pg-home-path-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M7.2 3.8h9.6A1.6 1.6 0 0 1 18.4 5.4v14l-3.2-1.8L12 19.8l-3.2-2.2-3.2 1.8V5.4A1.6 1.6 0 0 1 7.2 3.8Z"/><path d="M9.2 9.2h5.6M9.2 12h4"/><path d="M14.2 8.1c.5-.5 1.3-.5 1.8 0s.5 1.3 0 1.8l-.9.9-.9-.9c-.5-.5-.5-1.3 0-1.8Z"/></svg>
+                    </span>
+                    <h3>Build your shortlist</h3>
+                    <p>Compare the details that matter to your decision.</p>
+                </article>
+            </li>
+            <li class="pg-home-path-step reveal-item" data-reveal-delay="3">
+                <span class="pg-home-path-badge" aria-hidden="true">04</span>
+                <article class="pg-home-path-card">
+                    <span class="pg-home-path-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M8 12.2 5.8 14.4a2.2 2.2 0 0 0 3.1 3.1l1.6-1.6"/><path d="M16 12.2 18.2 14.4a2.2 2.2 0 0 1-3.1 3.1l-1.6-1.6"/><path d="M9.2 11.5V8.7a2.2 2.2 0 0 1 4.4 0v.5"/><path d="M14.8 11.5V9.1A2.2 2.2 0 0 0 11.6 7"/><path d="M9.2 15h5.6"/></svg>
+                    </span>
+                    <h3>Move forward with clarity</h3>
+                    <p>Connect with an advisor to discuss your next steps.</p>
+                </article>
+            </li>
+        </ol>
     </div>
 </section>
 <section class="section insights" id="insights">

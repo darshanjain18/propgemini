@@ -10,8 +10,18 @@ const propertyRail=document.getElementById('propertyGrid');
 if(propertyRail){
 const previous=document.getElementById('propertyPrev');
 const next=document.getElementById('propertyNext');
-if(previous) previous.addEventListener('click',()=>propertyRail.scrollBy({left:-propertyRail.clientWidth*0.78,behavior:'smooth'}));
-if(next) next.addEventListener('click',()=>propertyRail.scrollBy({left:propertyRail.clientWidth*0.78,behavior:'smooth'}));
+const pageBy = () => {
+  const card = propertyRail.querySelector('.property');
+  if (!card) return propertyRail.clientWidth;
+  const styles = getComputedStyle(propertyRail);
+  const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+  /* Scroll by one full row of visible cards (3 on desktop). */
+  const cardWidth = card.getBoundingClientRect().width;
+  const visible = Math.max(1, Math.round((propertyRail.clientWidth + gap) / (cardWidth + gap)));
+  return visible * (cardWidth + gap);
+};
+if(previous) previous.addEventListener('click',()=>propertyRail.scrollBy({left:-pageBy(),behavior:'smooth'}));
+if(next) next.addEventListener('click',()=>propertyRail.scrollBy({left:pageBy(),behavior:'smooth'}));
 propertyRail.addEventListener('wheel', e => {
   if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && propertyRail.scrollWidth > propertyRail.clientWidth) {
     e.preventDefault();

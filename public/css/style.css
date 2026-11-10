@@ -857,8 +857,8 @@ body:not(.home) .nav {
 
 /* Home-page finish: compact rhythm, premium property actions and upgraded footer. */
 body.home .section{padding:76px 0}
-body.home .city-section{padding:68px 0}
-body.home .city-section .section-head{margin-bottom:26px}
+body.home .city-section{padding:48px 0}
+body.home .city-section .section-head{margin-bottom:16px}
 body.home #amenities{padding-top:72px}
 .property{display:flex;flex-direction:column}
 .property-link{display:block}
@@ -992,8 +992,8 @@ body.enquire-page .visit-form>.field{border-radius:16px}
 #propertyGrid:active{cursor:grabbing}
 .properties > .property,
 #propertyGrid > .property{
-  flex:0 0 calc((100% - 44px) / 2.75)!important;
-  min-width:300px!important;
+  flex:0 0 calc((100% - 36px) / 3)!important;
+  min-width:0!important;
   max-width:none!important;
   width:auto!important;
   scroll-snap-align:start;
@@ -1001,7 +1001,7 @@ body.enquire-page .visit-form>.field{border-radius:16px}
 @media (max-width:1050px){
   .properties > .property,
   #propertyGrid > .property{
-    flex-basis:calc((100% - 22px) / 1.85)!important;
+    flex-basis:calc((100% - 18px) / 2)!important;
   }
 }
 @media (max-width:760px){

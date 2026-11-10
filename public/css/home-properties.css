@@ -1,0 +1,111 @@
+/* Homepage properties rail — 3 cards per view, one-screen section */
+body.home #properties.section {
+  padding: clamp(36px, 4.5vw, 52px) 0 clamp(28px, 3.5vw, 40px);
+}
+
+body.home #properties .section-head {
+  margin-bottom: clamp(16px, 2vw, 22px);
+  align-items: end;
+}
+
+body.home #properties .section-head h2 {
+  font-size: clamp(28px, 3.4vw, 40px);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+body.home #properties .eyebrow {
+  font-size: 11px;
+}
+
+body.home #properties .properties,
+body.home #propertyGrid {
+  gap: 18px !important;
+  padding: 2px 2px 12px !important;
+}
+
+/* Exactly 3 cards visible; next scroll shows the next 3 */
+body.home #properties .properties > .property,
+body.home #propertyGrid > .property {
+  flex: 0 0 calc((100% - 36px) / 3) !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  width: auto !important;
+  scroll-snap-align: start;
+}
+
+body.home #properties .property-image {
+  height: clamp(200px, 24vh, 250px) !important;
+}
+
+body.home #properties .property-body {
+  padding: 12px 14px 10px !important;
+  gap: 5px !important;
+}
+
+body.home #properties .property h3 {
+  font-size: clamp(19px, 1.55vw, 23px) !important;
+  margin: 0 !important;
+  line-height: 1.18 !important;
+}
+
+body.home #properties .property .developer {
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+
+body.home #properties .property .location {
+  font-size: 11px !important;
+}
+
+body.home #properties .specs {
+  padding: 8px 0 !important;
+  gap: 8px !important;
+  font-size: 11px !important;
+  margin: 0 !important;
+}
+
+body.home #properties .price-row {
+  margin-top: 2px !important;
+  margin-bottom: 0 !important;
+  padding-top: 2px;
+  font-size: 14px !important;
+}
+
+body.home #properties .price-row .text-link,
+body.home #properties .price-row a {
+  font-size: 13px !important;
+}
+
+body.home #properties .property .visit-open {
+  margin: 8px 14px 12px !important;
+  padding: 9px 12px !important;
+  min-height: 0 !important;
+  font-size: 12px !important;
+}
+
+@media (max-width: 1050px) {
+  body.home #properties .properties > .property,
+  body.home #propertyGrid > .property {
+    flex: 0 0 calc((100% - 18px) / 2) !important;
+  }
+
+  body.home #properties .property-image {
+    height: clamp(190px, 23vh, 230px) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  body.home #properties.section {
+    padding: 32px 0 28px;
+  }
+
+  body.home #properties .properties > .property,
+  body.home #propertyGrid > .property {
+    flex: 0 0 86% !important;
+  }
+
+  body.home #properties .property-image {
+    height: 220px !important;
+  }
+}

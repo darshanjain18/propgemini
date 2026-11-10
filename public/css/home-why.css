@@ -1,0 +1,311 @@
+/* Homepage Why Choose PropGemini — scoped to .pg-home-why only */
+.pg-home-why {
+  --wy-ivory: #f5ebdd;
+  --wy-gold: #c6a36a;
+  --wy-sand: #dcc8a5;
+  --wy-slate: #263b3d;
+  --wy-white: #ffffff;
+  --wy-muted: #5f5850;
+  --wy-radius-deep: clamp(90px, 14vw, 160px);
+  --wy-radius-soft: 22px;
+
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: clamp(36px, 4vw, 52px) 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 42% 36% at 6% 18%, rgba(220, 200, 165, 0.26), transparent 70%),
+    radial-gradient(ellipse 40% 34% at 94% 86%, rgba(198, 163, 106, 0.14), transparent 68%),
+    var(--wy-ivory);
+}
+
+.pg-home-why-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.88fr) minmax(300px, 1.12fr);
+  gap: clamp(24px, 3.2vw, 40px);
+  align-items: center;
+}
+
+.pg-home-why-media {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+}
+
+.pg-home-why-frame {
+  position: relative;
+  width: 100%;
+}
+
+.pg-home-why-outline {
+  position: absolute;
+  z-index: 2;
+  top: -10px;
+  left: -10px;
+  width: 68%;
+  height: 52%;
+  border: 1.5px solid var(--wy-gold);
+  border-right: 0;
+  border-bottom: 0;
+  border-radius: var(--wy-radius-deep) 0 0 0;
+  pointer-events: none;
+}
+
+.pg-home-why-photo {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  aspect-ratio: 5 / 5.6;
+  max-height: min(520px, 64vh);
+  border-radius: var(--wy-radius-deep) var(--wy-radius-soft) var(--wy-radius-soft) var(--wy-radius-soft);
+  background: #d8cbb8;
+  box-shadow: 0 18px 36px rgba(38, 59, 61, 0.1);
+}
+
+.pg-home-why-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s ease;
+}
+
+.pg-home-why-frame:hover .pg-home-why-photo img {
+  transform: scale(1.04);
+}
+
+.pg-home-why-caption {
+  position: absolute;
+  z-index: 3;
+  right: -4px;
+  bottom: 18px;
+  width: min(180px, 54%);
+  margin: 0;
+  padding: 14px 14px 15px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #d4b078 0%, #c6a36a 48%, #b08a4f 100%);
+  color: var(--wy-white);
+  font-family: var(--serif, "Fraunces", Georgia, serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(13px, 1.2vw, 16px);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  box-shadow: 0 16px 32px rgba(120, 88, 40, 0.28);
+}
+
+.pg-home-why-content {
+  min-width: 0;
+}
+
+.pg-home-why-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 0 0 10px;
+  color: var(--wy-gold);
+  font-family: var(--sans, "Manrope", system-ui, sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.pg-home-why-kicker::before,
+.pg-home-why-kicker::after {
+  content: "";
+  width: clamp(28px, 4vw, 48px);
+  height: 1px;
+  background: var(--wy-gold);
+  flex: 0 0 auto;
+}
+
+.pg-home-why-content h2 {
+  margin: 0 0 clamp(16px, 2vw, 22px);
+  color: var(--wy-slate);
+  font-family: var(--serif, "Fraunces", Georgia, serif);
+  font-weight: 500;
+  font-size: clamp(30px, 3.4vw, 42px);
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  text-align: center;
+}
+
+.pg-home-why-content h2 em {
+  color: var(--wy-gold);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.pg-home-why-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.pg-home-why-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: start;
+  margin: 0;
+  padding: 18px 16px;
+  border: 1px solid rgba(198, 163, 106, 0.45);
+  border-radius: 16px;
+  min-height: 108px;
+  background: var(--wy-white);
+  box-shadow: 0 10px 24px rgba(38, 59, 61, 0.05);
+  transition:
+    transform 0.28s ease,
+    border-color 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+.pg-home-why-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--wy-gold);
+  box-shadow: 0 16px 32px rgba(38, 59, 61, 0.1);
+}
+
+.pg-home-why-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  color: var(--wy-gold);
+}
+
+.pg-home-why-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pg-home-why-card h3 {
+  margin: 0 0 5px;
+  color: var(--wy-slate);
+  font-family: var(--serif, "Fraunces", Georgia, serif);
+  font-weight: 600;
+  font-size: clamp(18px, 1.45vw, 21px);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.pg-home-why-card p {
+  margin: 0;
+  color: var(--wy-muted);
+  font-family: var(--sans, "Manrope", system-ui, sans-serif);
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+@media (max-width: 1100px) {
+  .pg-home-why-inner {
+    gap: 24px;
+  }
+
+  .pg-home-why-media {
+    max-width: 380px;
+  }
+
+  .pg-home-why-caption {
+    bottom: 20px;
+    width: min(190px, 58%);
+    padding: 15px 15px 16px;
+  }
+}
+
+@media (max-width: 900px) {
+  .pg-home-why-inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .pg-home-why-media {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .pg-home-why-photo {
+    aspect-ratio: 5 / 4;
+    max-height: none;
+    border-radius: clamp(80px, 20vw, 120px) var(--wy-radius-soft) var(--wy-radius-soft) var(--wy-radius-soft);
+  }
+
+  .pg-home-why-outline {
+    border-radius: clamp(80px, 20vw, 120px) 0 0 0;
+  }
+
+  .pg-home-why-content h2 {
+    max-width: 18ch;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .pg-home-why {
+    padding: 28px 0 36px;
+  }
+
+  .pg-home-why-media {
+    max-width: none;
+  }
+
+  .pg-home-why-photo {
+    aspect-ratio: 4 / 5;
+  }
+
+  .pg-home-why-outline {
+    top: -10px;
+    left: -10px;
+    width: 72%;
+    height: 48%;
+  }
+
+  .pg-home-why-caption {
+    right: 10px;
+    bottom: 16px;
+    width: min(180px, 62%);
+    font-size: 14px;
+  }
+
+  .pg-home-why-cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .pg-home-why-card {
+    padding: 18px 16px;
+  }
+
+  .pg-home-why-content h2 {
+    max-width: none;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pg-home-why-card,
+  .pg-home-why-photo img {
+    transition: none;
+  }
+
+  .pg-home-why-card:hover {
+    transform: none;
+  }
+
+  .pg-home-why-frame:hover .pg-home-why-photo img {
+    transform: none;
+  }
+}

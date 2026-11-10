@@ -11,7 +11,7 @@
   position: relative;
   z-index: 1;
   margin: 0;
-  padding: clamp(36px, 4.5vw, 52px) 0 clamp(40px, 5vw, 56px);
+  padding: 0 0 clamp(32px, 3.6vw, 44px);
   overflow: hidden;
   background:
     radial-gradient(ellipse 48% 42% at 8% 18%, rgba(220, 200, 165, 0.28), transparent 70%),
@@ -25,17 +25,17 @@
 }
 
 .pg-home-amenities-head {
-  margin: 0 0 clamp(18px, 2.4vw, 26px);
+  margin: 0 0 clamp(10px, 1.4vw, 14px);
 }
 
 .pg-home-amenities-kicker {
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  margin: 0 0 10px;
+  margin: 0 0 6px;
   color: var(--am-gold);
   font-family: var(--sans, "Manrope", system-ui, sans-serif);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -51,7 +51,7 @@
 .pg-home-amenities-title-row {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) auto minmax(180px, 0.7fr);
-  gap: 14px 24px;
+  gap: 10px 20px;
   align-items: end;
 }
 
@@ -60,7 +60,7 @@
   color: var(--am-slate);
   font-family: var(--serif, "Fraunces", Georgia, serif);
   font-weight: 500;
-  font-size: clamp(26px, 3.2vw, 40px);
+  font-size: clamp(24px, 2.9vw, 36px);
   letter-spacing: -0.03em;
   line-height: 1.08;
   max-width: 14ch;
@@ -74,7 +74,7 @@
 
 .pg-home-amenities-divider {
   width: 1px;
-  height: 52px;
+  height: 42px;
   background: linear-gradient(180deg, transparent, var(--am-gold), transparent);
   justify-self: center;
 }
@@ -84,17 +84,17 @@
   max-width: 28ch;
   color: var(--am-muted);
   font-family: var(--sans, "Manrope", system-ui, sans-serif);
-  font-size: 13.5px;
-  line-height: 1.55;
+  font-size: 15px;
+  line-height: 1.5;
   font-weight: 500;
 }
 
 .pg-home-amenities-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(22px, 2.6vw, 30px) clamp(14px, 1.8vw, 22px);
+  gap: clamp(28px, 3.2vw, 36px) clamp(12px, 1.5vw, 18px);
   align-items: stretch;
-  padding: 18px 4px 16px;
+  padding: 12px 4px 10px;
 }
 
 .pg-home-amenity-card {
@@ -112,8 +112,8 @@
 /* Reference silhouette: organic horizontal lens (soft side points, arched top/bottom) */
 .pg-home-amenity-shell {
   position: relative;
-  width: min(100%, 340px);
-  aspect-ratio: 1.45 / 1;
+  width: min(100%, 300px);
+  aspect-ratio: 1.55 / 1;
   margin-inline: auto;
   transition: transform 0.35s ease;
 }
@@ -138,7 +138,7 @@
   align-items: center;
   justify-content: flex-end;
   overflow: hidden;
-  padding: 42px 40px 36px;
+  padding: 34px 32px 28px;
   text-align: center;
   color: var(--am-white);
   background: var(--am-teal);
@@ -177,8 +177,8 @@
   z-index: 5;
   display: grid;
   place-items: center;
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: 1.5px solid var(--am-gold);
   background: var(--am-teal);
@@ -189,8 +189,8 @@
 }
 
 .pg-home-amenity-icon svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   stroke: currentColor;
   stroke-width: 1.7;
   stroke-linecap: round;
@@ -232,8 +232,8 @@
   z-index: 5;
   display: grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   border: 1.5px solid var(--am-gold);
   background: rgba(0, 50, 48, 0.92);
@@ -279,34 +279,34 @@
 
   .pg-home-amenities-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 28px 18px;
+    gap: 32px 14px;
   }
 
   .pg-home-amenity-shell {
-    width: min(100%, 300px);
+    width: min(100%, 280px);
   }
 }
 
 @media (max-width: 640px) {
   .pg-home-amenities {
-    padding: 36px 0 44px;
+    padding: 0 0 36px;
   }
 
   .pg-home-amenities-grid {
     grid-template-columns: 1fr;
-    gap: 28px;
-    max-width: 360px;
+    gap: 32px;
+    max-width: 320px;
     margin: 0 auto;
-    padding-top: 18px;
+    padding-top: 12px;
   }
 
   .pg-home-amenity-shell {
-    width: min(100%, 340px);
-    aspect-ratio: 1.45 / 1;
+    width: min(100%, 300px);
+    aspect-ratio: 1.55 / 1;
   }
 
   .pg-home-amenity-face {
-    padding: 40px 36px 34px;
+    padding: 32px 28px 26px;
   }
 
   .pg-home-amenities-title-row h2 {
