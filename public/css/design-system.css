@@ -609,7 +609,7 @@ body.contact-page .pg-section h2 {
   position: sticky;
   top: 0;
   z-index: 80;
-  margin-bottom: -70px;
+  margin-bottom: -88px;
 }
 
 .site-bar .nav {
@@ -773,7 +773,7 @@ body:not(.home) .announcement-sep {
 }
 
 @media (max-width: 760px) {
-  .site-bar { margin-bottom: -64px; }
+  .site-bar { margin-bottom: -74px; }
   .announcement { font-size: 13px !important; }
 }
 

@@ -70,15 +70,90 @@ $propertiesUrl = webPath('pages/properties.php');
         </div>
     </div>
 </section>
-<section class="section wrap" id="amenities">
-    <div class="section-head reveal-block"><div><div class="eyebrow">Living</div><h2>Amenities that elevate everyday life</h2></div></div>
-    <div class="amenity-grid">
-        <article class="amenity reveal-item"><span>01</span><h3>Clubhouse</h3><p>Lounges, indoor games and space for gatherings.</p></article>
-        <article class="amenity reveal-item"><span>02</span><h3>Landscaped gardens</h3><p>Green courtyards and walking paths for everyday calm.</p></article>
-        <article class="amenity reveal-item"><span>03</span><h3>Fitness &amp; wellness</h3><p>Gym and open-air spaces for yoga and training.</p></article>
-        <article class="amenity reveal-item"><span>04</span><h3>Children's play</h3><p>Safe play areas designed for different age groups.</p></article>
-        <article class="amenity reveal-item"><span>05</span><h3>Security</h3><p>Controlled access and monitored entry points.</p></article>
-        <article class="amenity reveal-item"><span>06</span><h3>Parking &amp; power</h3><p>Visitor parking and power backup for everyday ease.</p></article>
+<section class="pg-home-amenities" id="amenities" aria-labelledby="pg-home-amenities-heading">
+    <div class="wrap pg-home-amenities-inner">
+        <header class="pg-home-amenities-head reveal-block">
+            <p class="pg-home-amenities-kicker">Living</p>
+            <div class="pg-home-amenities-title-row">
+                <h2 id="pg-home-amenities-heading">Amenities that elevate <em>everyday life</em></h2>
+                <span class="pg-home-amenities-divider" aria-hidden="true"></span>
+                <p class="pg-home-amenities-lead">Thoughtfully curated spaces for wellness, leisure, family and peace of mind.</p>
+            </div>
+        </header>
+
+        <div class="pg-home-amenities-grid">
+            <?php
+            $homeAmenities = [
+                [
+                    'title' => 'Clubhouse',
+                    'copy' => 'Lounges, indoor games and space for gatherings.',
+                    'image' => 'public/images/clubhouse.jpg',
+                    'icon' => 'club',
+                ],
+                [
+                    'title' => 'Landscaped gardens',
+                    'copy' => 'Green courtyards and walking paths for everyday calm.',
+                    'image' => 'public/images/landscaped-gardens.jpg',
+                    'icon' => 'garden',
+                ],
+                [
+                    'title' => 'Fitness & wellness',
+                    'copy' => 'Gym and open-air spaces for yoga and training.',
+                    'image' => 'public/images/fitness.jpg',
+                    'icon' => 'fitness',
+                ],
+                [
+                    'title' => "Children's play",
+                    'copy' => 'Safe play areas designed for different age groups.',
+                    'image' => 'public/images/childrens-play.jpg',
+                    'icon' => 'kids',
+                ],
+                [
+                    'title' => 'Security',
+                    'copy' => 'Controlled access and monitored entry points.',
+                    'image' => 'public/images/security.jpg',
+                    'icon' => 'security',
+                ],
+                [
+                    'title' => 'Parking & power',
+                    'copy' => 'Visitor parking and power backup for everyday ease.',
+                    'image' => 'public/images/parking.jpg',
+                    'icon' => 'parking',
+                ],
+            ];
+            foreach ($homeAmenities as $index => $amenity):
+            ?>
+                <article class="pg-home-amenity-card reveal-item" data-reveal-delay="<?= (int) ($index % 3) ?>">
+                    <div class="pg-home-amenity-shell">
+                        <span class="pg-home-amenity-frame" aria-hidden="true"></span>
+                        <div class="pg-home-amenity-face">
+                            <img class="pg-home-amenity-media" src="<?= h(webPath($amenity['image'])) ?>" alt="<?= h($amenity['title']) ?>" loading="lazy" decoding="async" width="720" height="560">
+                            <span class="pg-home-amenity-veil" aria-hidden="true"></span>
+                            <div class="pg-home-amenity-copy">
+                                <h3><?= h($amenity['title']) ?></h3>
+                                <p><?= h($amenity['copy']) ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="pg-home-amenity-icon" data-icon="<?= h($amenity['icon']) ?>" aria-hidden="true">
+                        <?php if ($amenity['icon'] === 'club'): ?>
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M5 18.5V10.2c0-.6.3-1.2.8-1.5L12 5.5l6.2 3.2c.5.3.8.9.8 1.5v8.3"/><path d="M9 18.5v-4.2h6v4.2"/><path d="M4 18.5h16"/></svg>
+                        <?php elseif ($amenity['icon'] === 'garden'): ?>
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M12 20V11"/><path d="M12 14c-3.2 0-5.5-2-5.5-4.8C6.5 6.4 9 5 12 5c0 3 1.8 5.5 4.8 5.5-1.2 2.4-2.9 3.5-4.8 3.5Z"/></svg>
+                        <?php elseif ($amenity['icon'] === 'fitness'): ?>
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M3.5 10.5v3"/><path d="M20.5 10.5v3"/><path d="M6 9.2v5.6"/><path d="M18 9.2v5.6"/><path d="M6 12h12"/><path d="M8.2 8.5v7"/><path d="M15.8 8.5v7"/></svg>
+                        <?php elseif ($amenity['icon'] === 'kids'): ?>
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M7 19V9.5"/><path d="M7 9.5c2.4-2.8 5-4 8.5-4"/><path d="M12.5 19v-7.2"/><path d="M12.5 11.8 16 19"/><circle cx="7" cy="6.2" r="1.3"/></svg>
+                        <?php elseif ($amenity['icon'] === 'security'): ?>
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.8 5.5 6.5v5.2c0 4 2.7 7.4 6.5 8.5 3.8-1.1 6.5-4.5 6.5-8.5V6.5L12 3.8Z"/><path d="m9.6 12 1.7 1.7 3.2-3.4"/></svg>
+                        <?php else: ?>
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M4 15.5h16"/><path d="M6.2 15.5V11l5.8-3.5L17.8 11v4.5"/><path d="M8.2 18.2h7.6"/><circle cx="8.4" cy="15.5" r="1.4"/><circle cx="15.6" cy="15.5" r="1.4"/></svg>
+                        <?php endif; ?>
+                    </span>
+                    <span class="pg-home-amenity-go" aria-hidden="true">→</span>
+                </article>
+            <?php endforeach; ?>
+        </div>
     </div>
 </section>
 <section class="section wrap">
