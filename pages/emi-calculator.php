@@ -280,9 +280,10 @@ require dirname(__DIR__) . '/includes/navbar.php';
                             </div>
                         </div>
 
+                        <input type="hidden" name="ask_whatsapp_consent" value="1">
                         <label class="pg-emi-consent">
-                            <input type="checkbox" name="whatsapp_consent" value="1">
-                            <span>I agree to receive WhatsApp follow-up messages about my enquiry.</span>
+                            <input type="checkbox" name="whatsapp_consent" value="1" required>
+                            <span>I agree to receive WhatsApp follow-up messages about my enquiry. *</span>
                         </label>
 
                         <p class="form-status" role="status"></p>

@@ -34,5 +34,6 @@ recordSiteTraffic(null, (string) $pageTitle, $trackPropertyId && $trackPropertyI
         <link rel="stylesheet" href="<?= h(webPath((string) $styleHref)) ?>">
     <?php endforeach; ?>
 <?php endif; ?>
+<link rel="stylesheet" href="<?= h(webPath('public/css/responsive.css')) ?>">
 </head>
 <body<?= $bodyClass !== '' ? ' class="' . h($bodyClass) . '"' : '' ?>>

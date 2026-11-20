@@ -7,6 +7,7 @@ $pageTitle = 'PropGemini | Exceptional Property. Considered Living.';
 $pageDescription = 'Discover exceptional residential and commercial properties across Pune, Mumbai and Gurgaon with PropGemini, a considered property advisory experience.';
 $bodyClass = 'home';
 $pageStyles = ['public/css/home-hero.css', 'public/css/home-amenities.css', 'public/css/home-why.css', 'public/css/home-properties.css', 'public/css/home-cities.css', 'public/css/home-path.css'];
+$pageScripts = ['public/js/home-path.js'];
 
 require __DIR__ . '/includes/header.php';
 require __DIR__ . '/includes/navbar.php';

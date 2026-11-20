@@ -292,12 +292,13 @@ body.enquire-page .pg-enquire-form > .city-field {
 
 body.enquire-page .pg-enquire-form > .property-field,
 body.enquire-page .pg-enquire-form > .ai-message-field,
+body.enquire-page .pg-enquire-form > .visit-consent,
 body.enquire-page .pg-enquire-form > .form-status,
 body.enquire-page .pg-enquire-form > .send-btn {
   grid-column: 1 / -1 !important;
 }
 
-body.enquire-page .pg-enquire-form label {
+body.enquire-page .pg-enquire-form label:not(.visit-consent) {
   display: block;
   margin: 0 0 5px !important;
   color: var(--pg-slate) !important;
@@ -311,7 +312,7 @@ body.enquire-page .pg-enquire-form label .req {
   color: #a35a45;
 }
 
-body.enquire-page .pg-enquire-form input:not([type="hidden"]),
+body.enquire-page .pg-enquire-form input:not([type="hidden"]):not([type="checkbox"]),
 body.enquire-page .pg-enquire-form .property-search,
 body.enquire-page .pg-enquire-form select,
 body.enquire-page .pg-enquire-form textarea {
@@ -324,6 +325,44 @@ body.enquire-page .pg-enquire-form textarea {
   color: var(--pg-slate) !important;
   font-size: 13.5px !important;
   box-shadow: none !important;
+}
+
+body.enquire-page .pg-enquire-form .visit-consent {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  margin: 4px 0 2px !important;
+  color: rgba(38, 59, 61, 0.78) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  line-height: 1.45 !important;
+  cursor: pointer;
+}
+
+body.enquire-page .pg-enquire-form .visit-consent input[type="checkbox"] {
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  min-height: 14px !important;
+  margin: 2px 0 0 !important;
+  padding: 0 !important;
+  border: 1px solid rgba(198, 163, 106, 0.7) !important;
+  border-radius: 3px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  flex: 0 0 14px !important;
+  accent-color: var(--pg-gold, #c6a36a);
+  cursor: pointer;
+}
+
+body.enquire-page .pg-enquire-form .visit-consent span {
+  flex: 1 1 auto;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  line-height: 1.45 !important;
 }
 
 body.enquire-page .pg-enquire-form select {
@@ -548,7 +587,7 @@ body.enquire-page .pg-enquire-form .property-results:before {
     gap: 10px 12px !important;
   }
 
-  body.enquire-page .pg-enquire-form input:not([type="hidden"]),
+  body.enquire-page .pg-enquire-form input:not([type="hidden"]):not([type="checkbox"]),
   body.enquire-page .pg-enquire-form .property-search,
   body.enquire-page .pg-enquire-form select {
     min-height: 42px !important;
@@ -638,6 +677,7 @@ body.enquire-page .pg-enquire-form .property-results:before {
   }
 
   body.enquire-page .pg-enquire-form > .ai-message-field,
+  body.enquire-page .pg-enquire-form > .visit-consent,
   body.enquire-page .pg-enquire-form > .form-status,
   body.enquire-page .pg-enquire-form > .send-btn {
     grid-column: 1 !important;

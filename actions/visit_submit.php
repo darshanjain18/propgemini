@@ -32,7 +32,7 @@ if (!verifyCsrfToken($_POST['csrf_token'] ?? null)) {
 
 // Honeypot: bots that fill this field are rejected quietly.
 if (trim((string) ($_POST['website'] ?? '')) !== '') {
-    jsonOut(true, 'Thank you. Your details have been received.');
+    jsonOut(true, 'Your enquiry has been submitted successfully. Please wait for our team to contact you.');
 }
 
 $code = trim((string) ($_POST['country_code'] ?? '+91'));
@@ -55,13 +55,18 @@ $when = trim((string) ($_POST['visit_date'] ?? ''));
 $time = trim((string) ($_POST['visit_time'] ?? ''));
 if ($intent === 'visit') {
     if ($when === '' || $time === '') {
-        jsonOut(false, 'Choose a preferred future date and time for your site visit.', 422);
+        jsonOut(false, 'Choose a preferred date and time for your site visit.', 422);
     }
 
-    $visitAt = DateTimeImmutable::createFromFormat('!Y-m-d H:i', $when . ' ' . $time);
-    $errors = DateTimeImmutable::getLastErrors();
-    if ($visitAt === false || ($errors !== false && ($errors['warning_count'] > 0 || $errors['error_count'] > 0)) || $visitAt <= new DateTimeImmutable('now')) {
-        jsonOut(false, 'Choose a valid future date and time for your site visit.', 422);
+    $visitDate = DateTimeImmutable::createFromFormat('!Y-m-d', $when);
+    $dateErrors = DateTimeImmutable::getLastErrors();
+    $today = new DateTimeImmutable('today');
+    $dateInvalid = $visitDate === false
+        || ($dateErrors !== false && (($dateErrors['warning_count'] ?? 0) > 0 || ($dateErrors['error_count'] ?? 0) > 0));
+    $timeValid = (bool) preg_match('/^\d{2}:\d{2}(:\d{2})?$/', $time);
+    // Allow any clock time on today or a later date — do not require "later than now".
+    if ($dateInvalid || !$timeValid || $visitDate < $today) {
+        jsonOut(false, 'Choose a valid preferred date and time for your site visit.', 422);
     }
 }
 $message = trim((string) $_POST['message']);
@@ -88,6 +93,9 @@ if ($when !== '') {
     $message = 'Preferred time: ' . $when . ($time !== '' ? ' ' . $time : '') . '. ' . $message;
 }
 $whatsappConsent = isset($_POST['whatsapp_consent']) ? 1 : 0;
+if (isset($_POST['ask_whatsapp_consent']) && $whatsappConsent !== 1) {
+    jsonOut(false, 'Please agree to receive WhatsApp follow-up messages to continue.', 422);
+}
 
 $name = trim((string) $_POST['name']);
 $email = trim((string) $_POST['email']);
@@ -167,19 +175,56 @@ $typeLabel = match ($intent) {
     default => 'Site visit request',
 };
 
+$propertyLabel = $property
+    ? ($property['name'] . ' (' . $property['area'] . ', ' . $property['city'] . ')')
+    : '';
+$visitAt = ($intent === 'visit' && $when !== '')
+    ? ($when . ($time !== '' ? ' ' . $time : ''))
+    : '';
+
+$mailFields = [
+    'Form type' => $typeLabel,
+    'Full name' => $name,
+    'Phone' => $fullPhone,
+    'Email' => $email,
+];
+
+if ($preferredCity !== '') {
+    $mailFields['Preferred city'] = $preferredCity;
+}
+if ($propertyType !== '') {
+    $mailFields['Property type'] = $propertyType;
+}
+if ($budgetRange !== '') {
+    $mailFields['Budget range'] = $budgetRange;
+}
+if ($propertyLabel !== '') {
+    $mailFields['Property'] = $propertyLabel;
+}
+if ($intent === 'visit') {
+    $mailFields['Preferred visit date'] = $when;
+    $mailFields['Preferred visit time'] = $time;
+}
+
+$mailFields['Message'] = trim((string) $_POST['message']);
+// Only include WhatsApp consent when the submitted form actually showed that checkbox (e.g. EMI).
+if (array_key_exists('whatsapp_consent', $_POST) || isset($_POST['ask_whatsapp_consent'])) {
+    $mailFields['WhatsApp consent'] = $whatsappConsent ? 'Yes' : 'No';
+}
+$mailFields['Source'] = 'website · ' . $intent;
+$mailFields['Submitted at'] = date('Y-m-d H:i:s');
+
 notifyLead([
     'type' => $typeLabel,
     'name' => $name,
     'phone' => $fullPhone,
     'email' => $email,
-    'property' => $property
-        ? ($property['name'] . ' (' . $property['area'] . ', ' . $property['city'] . ')')
-        : '',
-    'visit_at' => ($intent === 'visit' && $when !== '')
-        ? ($when . ($time !== '' ? ' ' . $time : ''))
-        : '',
+    'property' => $propertyLabel,
+    'visit_at' => $visitAt,
     'message' => trim((string) $_POST['message']),
     'source' => 'visit-form:' . $intent,
+    'mail_channel' => 'enquiry',
+    'fields' => $mailFields,
 ]);
 
 if ($intent === 'visit') {
@@ -211,4 +256,10 @@ if ($property && $intent === 'brochure') {
     $extra['property_id'] = (string) $property['id'];
 }
 
-jsonOut(true, 'Thank you. Your details have been received.', 200, $extra);
+$successMessage = match ($intent) {
+    'visit' => 'Your site visit request has been submitted successfully. Please wait for our team to contact you.',
+    'brochure' => 'Your details have been submitted successfully. Please wait for our team to contact you.',
+    default => 'Your enquiry has been submitted successfully. Please wait for our team to contact you.',
+};
+
+jsonOut(true, $successMessage, 200, $extra);

@@ -20,10 +20,10 @@ require dirname(__DIR__) . '/includes/navbar.php';
 <main class="about-main">
     <section class="section wrap about-intro">
         <div class="about-intro-copy">
-            <p class="eyebrow">About PropGemini</p>
+            <p class="eyebrow">About Us</p>
             <h2>Your trusted partner in <em>luxury real estate</em></h2>
-            <p><?= h($aboutBlurb) ?></p>
-            <p class="about-lede">Our curated portfolio features refined homes from reputable developers, with clear guidance from first enquiry through site visit.</p>
+            <!-- <p><?= h($aboutBlurb) ?></p> -->
+            <p class="about-lede">PropGemini brings together a carefully selected portfolio of premium residential and commercial properties across Gurgaon, Mumbai and Pune. We focus on quality, location, lifestyle and long-term value, helping you discover properties that align with your aspirations and investment goals.</p>
         </div>
         <div class="about-visual">
             <div class="about-orbit" aria-hidden="true"></div>

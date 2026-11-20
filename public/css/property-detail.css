@@ -986,7 +986,7 @@ body.property-page .pg-pd-form label .req {
   color: #a35a45;
 }
 
-body.property-page .pg-pd-form input:not([type="hidden"]),
+body.property-page .pg-pd-form input:not([type="hidden"]):not([type="checkbox"]),
 body.property-page .pg-pd-form textarea {
   width: 100%;
   min-height: 42px !important;

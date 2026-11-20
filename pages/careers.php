@@ -118,7 +118,7 @@ require dirname(__DIR__) . '/includes/navbar.php';
                 novalidate
             >
                 <?php if ($status === 'success'): ?>
-                    <p class="pg-careers-alert is-ok" role="status" data-careers-status>Application received. We’ll be in touch if there’s a fit.</p>
+                    <p class="pg-careers-alert is-ok" role="status" data-careers-status>Application submitted successfully. If your resume gets shortlisted, you will receive a call.</p>
                 <?php elseif ($status === 'duplicate'): ?>
                     <p class="pg-careers-alert is-err" role="alert" data-careers-status>We already have a recent application from you for this role. Please wait before applying again.</p>
                 <?php elseif ($status === 'error'): ?>

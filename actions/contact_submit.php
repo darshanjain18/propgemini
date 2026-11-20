@@ -72,13 +72,28 @@ try {
         'source' => $whatsappConsent ? 'whatsapp-consent' : 'contact',
     ]);
 
+    $typeLabel = $subject !== '' ? $subject : 'Contact form enquiry';
+    $source = $whatsappConsent ? 'whatsapp-consent' : 'contact';
+
     notifyLead([
-        'type' => $subject !== '' ? $subject : 'Contact form enquiry',
+        'type' => $typeLabel,
         'name' => $name,
         'phone' => $phone,
         'email' => $email,
         'message' => $message,
-        'source' => $whatsappConsent ? 'whatsapp-consent' : 'contact',
+        'source' => $source,
+        'mail_channel' => 'enquiry',
+        'fields' => array_filter([
+            'Form type' => $typeLabel,
+            'Full name' => $name,
+            'Phone' => $phone,
+            'Email' => $email,
+            'Subject' => $subject,
+            'Message' => $message,
+            'WhatsApp consent' => $whatsappConsent ? 'Yes' : 'No',
+            'Source' => 'website · contact',
+            'Submitted at' => date('Y-m-d H:i:s'),
+        ], static fn ($value): bool => trim((string) $value) !== ''),
     ]);
 
     createAdminAlert(

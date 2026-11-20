@@ -293,20 +293,51 @@
   }
 
   .pg-home-amenities-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    max-width: 320px;
-    margin: 0 auto;
-    padding-top: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 10px;
+    max-width: none;
+    margin: 0;
+    padding: 12px 0 8px;
   }
 
   .pg-home-amenity-shell {
-    width: min(100%, 300px);
-    aspect-ratio: 1.55 / 1;
+    width: 100%;
+    aspect-ratio: 1.35 / 1;
   }
 
   .pg-home-amenity-face {
-    padding: 32px 28px 26px;
+    padding: 22px 12px 18px;
+  }
+
+  .pg-home-amenity-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .pg-home-amenity-icon svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .pg-home-amenity-copy {
+    max-width: 100%;
+    gap: 3px;
+  }
+
+  .pg-home-amenity-copy h3 {
+    font-size: clamp(13px, 3.4vw, 16px);
+    line-height: 1.2;
+  }
+
+  .pg-home-amenity-copy p {
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  .pg-home-amenity-go {
+    width: 22px;
+    height: 22px;
+    font-size: 13px;
   }
 
   .pg-home-amenities-title-row h2 {

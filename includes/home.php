@@ -12,7 +12,7 @@ $propertiesUrl = webPath('pages/properties.php');
     <div class="wrap hero-content">
         <p class="eyebrow reveal-item" data-reveal-delay="0">Property, reimagined</p>
         <h1 class="reveal-item" data-reveal-delay="1">Exceptional homes.<br><em>Extraordinary living.</em></h1>
-        <p class="reveal-item" data-reveal-delay="2">A considered collection of remarkable residences across Pune, Mumbai and Gurgaon. Discover architecture, addresses and spaces chosen for the way you want to live.</p>
+        <p class="reveal-item" data-reveal-delay="2">Explore distinctive residences and sought-after addresses across Pune, Mumbai and Gurgaon. Find a space that feels right for your lifestyle and ambitions.</p>
         <div class="hero-actions reveal-item" data-reveal-delay="3">
             <a class="btn light" href="<?= h($propertiesUrl) ?>">Explore properties <span>↗</span></a>
             <button class="btn outline visit-open" type="button" data-intent="visit">Request Site Visit</button>
@@ -35,8 +35,10 @@ $propertiesUrl = webPath('pages/properties.php');
             <h2>Exceptional spaces.<br>Thoughtful choices.</h2>
         </div>
         <div class="property-tools">
-            <button class="rail-btn" type="button" id="propertyPrev" aria-label="Scroll properties left">←</button>
-            <button class="rail-btn" type="button" id="propertyNext" aria-label="Scroll properties right">→</button>
+            <div class="property-tools-nav">
+                <button class="rail-btn" type="button" id="propertyPrev" aria-label="Scroll properties left">←</button>
+                <button class="rail-btn" type="button" id="propertyNext" aria-label="Scroll properties right">→</button>
+            </div>
             <a class="text-link" href="<?= h($propertiesUrl) ?>">View all projects ↗</a>
         </div>
     </div>
@@ -53,7 +55,6 @@ $propertiesUrl = webPath('pages/properties.php');
     <div class="wrap">
         <div class="section-head reveal-block">
             <div>
-                <div class="eyebrow">Pune, Mumbai and Gurgaon</div>
                 <h2>Find your part<br>of the city.</h2>
             </div>
         </div>
@@ -76,8 +77,8 @@ $propertiesUrl = webPath('pages/properties.php');
             <p class="pg-home-amenities-kicker">Living</p>
             <div class="pg-home-amenities-title-row">
                 <h2 id="pg-home-amenities-heading">Amenities that elevate <em>everyday life</em></h2>
-                <span class="pg-home-amenities-divider" aria-hidden="true"></span>
-                <p class="pg-home-amenities-lead">Thoughtfully curated spaces for wellness, leisure, family and peace of mind.</p>
+                <!-- <span class="pg-home-amenities-divider" aria-hidden="true"></span> -->
+                <!-- <p class="pg-home-amenities-lead">Thoughtfully curated spaces for wellness, leisure, family and peace of mind.</p> -->
             </div>
         </header>
 
@@ -198,8 +199,8 @@ $propertiesUrl = webPath('pages/properties.php');
                         <svg viewBox="0 0 24 24" fill="none"><rect x="4.5" y="11.5" width="15" height="7.5" rx="1.2"/><rect x="6.5" y="7.2" width="11" height="4.3" rx="1"/><rect x="8.5" y="3.8" width="7" height="3.4" rx=".9"/></svg>
                     </span>
                     <div>
-                        <h3>Verified Properties</h3>
-                        <p>Thoroughly vetted projects with transparent details and updated status.</p>
+                        <h3>Curated Properties</h3>
+                        <p>A considered selection of residences and commercial spaces chosen for their quality, appeal and potential.</p>
                     </div>
                 </article>
 
@@ -208,8 +209,8 @@ $propertiesUrl = webPath('pages/properties.php');
                         <svg viewBox="0 0 24 24" fill="none"><path d="M4.8 14.2v-1.4a7.2 7.2 0 0 1 14.4 0v1.4"/><path d="M4.8 14.2h2.3v4.2H4.8z"/><path d="M16.9 14.2h2.3v4.2h-2.3z"/><path d="M12 19.2h2.4a2.1 2.1 0 0 0 2.1-2.1v-.8"/></svg>
                     </span>
                     <div>
-                        <h3>End-to-End Support</h3>
-                        <p>From site visits and financing to booking and post-sales assistance.</p>
+                        <h3>Personalised Guidance</h3>
+                        <p>From your first enquiry to site visits and beyond, receive support at every step of your property journey.</p>
                     </div>
                 </article>
             </div>
@@ -227,8 +228,8 @@ $propertiesUrl = webPath('pages/properties.php');
         </div>
         <div class="spotlight-copy">
             <div class="eyebrow">Property spotlight</div>
-            <h2>Room to live<br><em>beautifully.</em></h2>
-            <p>A considered residence framed by quiet interiors, generous light and a neighbourhood that suits everyday living.</p>
+            <h2>An Address That<br><em> Reflects You.</em></h2>
+            <p>Step into a residence where contemporary living, considered design and an exceptional neighbourhood create a life of distinction.</p>
             <div class="spotlight-data">
                 <div class="spotlight-stat"><span>Location</span><strong>Pune, Maharashtra</strong></div>
                 <div class="spotlight-stat"><span>Configuration</span><strong>3 BHK</strong></div>
@@ -241,7 +242,35 @@ $propertiesUrl = webPath('pages/properties.php');
         </div>
     </div>
 </section>
-<section class="pg-home-path" aria-labelledby="pg-home-path-heading">
+<?php
+$pathSteps = [
+    [
+        'label' => 'Define Your Vision',
+        'title' => 'Define Your Vision',
+        'copy' => 'Tell us what home means to you—your preferred location, lifestyle, budget and aspirations.',
+        'icon' => '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5.5 6.8h9.2A2.8 2.8 0 0 1 17.5 9.6v4.2a2.8 2.8 0 0 1-2.8 2.8H11l-3.4 2.6v-2.6H8.3A2.8 2.8 0 0 1 5.5 13.8V6.8Z"/><path d="M9 10.2h5.2M9 12.6h3.4"/></svg>',
+    ],
+    [
+        'label' => 'Discover the Possibilities',
+        'title' => 'Discover the Possibilities',
+        'copy' => 'Discover properties aligned with your priorities.',
+        'icon' => '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="5.2"/><path d="m15.2 15.2 3.3 3.3"/></svg>',
+    ],
+    [
+        'label' => 'Find Your Perfect Match',
+        'title' => 'Find Your Perfect Match',
+        'copy' => 'Compare your favourites, discover the finer details and narrow down your choices with confidence.',
+        'icon' => '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 4.5h8a1.2 1.2 0 0 1 1.2 1.2v13.2L12 16.2l-5.2 2.7V5.7A1.2 1.2 0 0 1 8 4.5Z"/></svg>',
+    ],
+    [
+        'label' => 'Experience It Firsthand',
+        'title' => 'Site visit',
+        'copy' => 'Arrange a site visit, explore the spaces and take the next step towards your new address.',
+        'icon' => '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.5" y="6" width="15" height="13.5" rx="2"/><path d="M8 4.5v3M16 4.5v3M4.5 10.5h15"/></svg>',
+    ],
+];
+?>
+<section class="pg-home-path" id="pg-home-path" aria-labelledby="pg-home-path-heading" data-pg-path>
     <div class="pg-home-path-arch" aria-hidden="true">
         <svg viewBox="0 0 460 340" fill="none" focusable="false">
             <path d="M52 292V152l178-108 178 108v140" stroke="currentColor" stroke-width="1.15"/>
@@ -254,52 +283,69 @@ $propertiesUrl = webPath('pages/properties.php');
     </div>
     <div class="wrap pg-home-path-inner">
         <header class="pg-home-path-head reveal-block">
-            <p class="pg-home-path-kicker">A clearer path forward</p>
-            <h2 id="pg-home-path-heading">From first search<br>to the <em>right decision.</em></h2>
+            <p class="pg-home-path-kicker">How it works</p>
+            <h2 id="pg-home-path-heading">A simple process,<br>for your <em>perfect home.</em></h2>
         </header>
 
-        <ol class="pg-home-path-track">
-            <li class="pg-home-path-step reveal-item" data-reveal-delay="0">
-                <span class="pg-home-path-badge" aria-hidden="true">01</span>
-                <article class="pg-home-path-card">
-                    <span class="pg-home-path-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-6.5-5.4-6.5-10a6.5 6.5 0 1 1 13 0c0 4.6-6.5 10-6.5 10Z"/><circle cx="12" cy="11" r="2.2"/></svg>
-                    </span>
-                    <h3>Tell us what you need</h3>
-                    <p>Share your preferred location, budget and requirements.</p>
-                </article>
-            </li>
-            <li class="pg-home-path-step reveal-item" data-reveal-delay="1">
-                <span class="pg-home-path-badge" aria-hidden="true">02</span>
-                <article class="pg-home-path-card">
-                    <span class="pg-home-path-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none"><path d="M5 17.5h14"/><path d="M6.5 17.5V13h11v4.5"/><path d="M8 13V9h8v4"/><path d="M9.5 9V5.5h5V9"/></svg>
-                    </span>
-                    <h3>Explore relevant options</h3>
-                    <p>Review properties aligned with your priorities.</p>
-                </article>
-            </li>
-            <li class="pg-home-path-step reveal-item" data-reveal-delay="2">
-                <span class="pg-home-path-badge" aria-hidden="true">03</span>
-                <article class="pg-home-path-card">
-                    <span class="pg-home-path-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none"><path d="M7.2 3.8h9.6A1.6 1.6 0 0 1 18.4 5.4v14l-3.2-1.8L12 19.8l-3.2-2.2-3.2 1.8V5.4A1.6 1.6 0 0 1 7.2 3.8Z"/><path d="M9.2 9.2h5.6M9.2 12h4"/><path d="M14.2 8.1c.5-.5 1.3-.5 1.8 0s.5 1.3 0 1.8l-.9.9-.9-.9c-.5-.5-.5-1.3 0-1.8Z"/></svg>
-                    </span>
-                    <h3>Build your shortlist</h3>
-                    <p>Compare the details that matter to your decision.</p>
-                </article>
-            </li>
-            <li class="pg-home-path-step reveal-item" data-reveal-delay="3">
-                <span class="pg-home-path-badge" aria-hidden="true">04</span>
-                <article class="pg-home-path-card">
-                    <span class="pg-home-path-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none"><path d="M8 12.2 5.8 14.4a2.2 2.2 0 0 0 3.1 3.1l1.6-1.6"/><path d="M16 12.2 18.2 14.4a2.2 2.2 0 0 1-3.1 3.1l-1.6-1.6"/><path d="M9.2 11.5V8.7a2.2 2.2 0 0 1 4.4 0v.5"/><path d="M14.8 11.5V9.1A2.2 2.2 0 0 0 11.6 7"/><path d="M9.2 15h5.6"/></svg>
-                    </span>
-                    <h3>Move forward with clarity</h3>
-                    <p>Connect with an advisor to discuss your next steps.</p>
-                </article>
-            </li>
+        <ol class="pg-home-path-track" role="list">
+            <?php foreach ($pathSteps as $index => $step): ?>
+                <li
+                    class="pg-home-path-step reveal-item<?= $index === 0 ? ' is-active' : '' ?>"
+                    data-reveal-delay="<?= (int) $index ?>"
+                    data-step="<?= (int) $index ?>"
+                    data-title="<?= h($step['title']) ?>"
+                    data-copy="<?= h($step['copy']) ?>"
+                >
+                    <button
+                        type="button"
+                        class="pg-home-path-trigger"
+                        aria-label="Step <?= (int) ($index + 1) ?>: <?= h($step['label']) ?>"
+                        aria-controls="pg-home-path-panel"
+                        aria-selected="<?= $index === 0 ? 'true' : 'false' ?>"
+                        data-path-step="<?= (int) $index ?>"
+                    >
+                        <span class="pg-home-path-badge" aria-hidden="true"><?= sprintf('%02d', $index + 1) ?></span>
+                        <span class="pg-home-path-point">
+                            <span class="pg-home-path-stem" aria-hidden="true"></span>
+                            <span class="pg-home-path-icon"><?= $step['icon'] ?></span>
+                            <span class="pg-home-path-label"><?= h($step['label']) ?></span>
+                        </span>
+                    </button>
+                    <article class="pg-home-path-card">
+                        <span class="pg-home-path-icon" aria-hidden="true"><?= $step['icon'] ?></span>
+                        <h3><?= h($step['title']) ?></h3>
+                        <p><?= h($step['copy']) ?></p>
+                    </article>
+                </li>
+            <?php endforeach; ?>
         </ol>
+
+        <div class="pg-home-path-stage">
+            <article class="pg-home-path-panel" id="pg-home-path-panel" aria-live="polite">
+                <div class="pg-home-path-panel-media" aria-hidden="true">
+                    <span class="pg-home-path-panel-icon" data-path-panel-icon></span>
+                </div>
+                <span class="pg-home-path-panel-rule" aria-hidden="true"></span>
+                <div class="pg-home-path-panel-body">
+                    <h3 data-path-panel-title><?= h($pathSteps[0]['title']) ?></h3>
+                    <p data-path-panel-copy><?= h($pathSteps[0]['copy']) ?></p>
+                </div>
+                <button type="button" class="pg-home-path-next" data-path-next aria-label="Next step">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6.5 14.5 12 9 17.5"/></svg>
+                </button>
+            </article>
+            <div class="pg-home-path-dots" role="tablist" aria-label="How it works steps">
+                <?php foreach ($pathSteps as $index => $step): ?>
+                    <button
+                        type="button"
+                        class="pg-home-path-dot<?= $index === 0 ? ' is-active' : '' ?>"
+                        data-path-dot="<?= (int) $index ?>"
+                        aria-label="Step <?= (int) ($index + 1) ?>: <?= h($step['label']) ?>"
+                        aria-current="<?= $index === 0 ? 'true' : 'false' ?>"
+                    ></button>
+                <?php endforeach; ?>
+            </div>
+        </div>
     </div>
 </section>
 <section class="section insights" id="insights">

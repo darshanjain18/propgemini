@@ -8,6 +8,23 @@
   const statusBox = form.querySelector('[data-careers-status]');
   const submitBtn = form.querySelector('[data-careers-submit]');
 
+  // Show success popup after redirect from a successful application.
+  if (statusBox && statusBox.classList.contains('is-ok')) {
+    const modal = document.getElementById('formSuccessModal');
+    if (modal) {
+      const eyebrow = modal.querySelector('#formSuccessEyebrow');
+      const title = modal.querySelector('#formSuccessTitle');
+      const message = modal.querySelector('#formSuccessMessage');
+      if (eyebrow) eyebrow.textContent = 'Application received';
+      if (title) title.textContent = 'Submitted successfully.';
+      if (message) {
+        message.textContent = 'If your resume gets shortlisted, you will receive a call.';
+      }
+      modal.hidden = false;
+      document.body.classList.add('modal-open');
+    }
+  }
+
   if (resumeBtn && resumeInput) {
     resumeBtn.addEventListener('click', () => resumeInput.click());
   }

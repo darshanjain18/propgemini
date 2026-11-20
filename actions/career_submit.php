@@ -85,11 +85,32 @@ try {
         'user_agent' => $ua !== '' ? $ua : null,
     ]);
 
+    $resumeAbsolute = careerResumeAbsolutePath($resume['path']) ?? '';
     $summary = "Role: {$role}\nExperience: "
         . ($experience !== '' ? $experience : '—')
         . "\nNotice: " . ($notice !== '' ? $notice : '—')
         . "\nPhone: {$countryCode} {$phone}\n\n"
         . ($message !== '' ? $message : 'No additional note.');
+
+    $mailFields = [
+        'Form type' => 'Career application',
+        'Full name' => $name,
+        'Email' => $email,
+        'Phone' => $countryCode . ' ' . $phone,
+        'Role applying for' => $role,
+    ];
+    if ($experience !== '') {
+        $mailFields['Years of experience'] = $experience;
+    }
+    if ($notice !== '') {
+        $mailFields['Notice period'] = $notice;
+    }
+    if ($message !== '') {
+        $mailFields['Message / cover note'] = $message;
+    }
+    $mailFields['Resume file'] = (string) ($resume['original'] ?? '');
+    $mailFields['Source'] = 'website · careers';
+    $mailFields['Submitted at'] = date('Y-m-d H:i:s');
 
     notifyLead([
         'type' => 'Career application',
@@ -98,6 +119,10 @@ try {
         'email' => $email,
         'message' => $summary,
         'source' => 'careers',
+        'mail_channel' => 'careers',
+        'fields' => $mailFields,
+        'attachment_path' => $resumeAbsolute,
+        'attachment_name' => (string) ($resume['original'] ?? 'resume'),
     ]);
 
     createAdminAlert(

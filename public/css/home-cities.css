@@ -54,6 +54,24 @@ body.home .city-panel .go {
     padding: 32px 0 !important;
   }
 
+  body.home .city-section .section-head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  body.home .city-section .section-head > div {
+    width: 100%;
+    text-align: left;
+  }
+
+  body.home .city-section .eyebrow,
+  body.home .city-section .section-head h2 {
+    text-align: left;
+  }
+
   body.home .city-row {
     height: auto !important;
     gap: 14px !important;

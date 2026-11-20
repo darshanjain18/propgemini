@@ -89,14 +89,14 @@ function renderVisitFields(string $prefix, string $intent = 'visit', string $pro
                 <div class="visit-when">
                     <div>
                         <label for="<?= h($prefix) ?>-visit-date">Date</label>
-                        <input id="<?= h($prefix) ?>-visit-date" name="visit_date" type="date" min="<?= h(date('Y-m-d')) ?>" required>
+                        <input id="<?= h($prefix) ?>-visit-date" name="visit_date" type="date" min="<?= h(date('Y-m-d')) ?>" max="2100-12-31" required>
                     </div>
                     <div>
                         <label for="<?= h($prefix) ?>-visit-time">Time</label>
                         <input id="<?= h($prefix) ?>-visit-time" name="visit_time" type="time" required>
                     </div>
                 </div>
-                <p class="visit-time-help">Choose a future date and time for your visit.</p>
+                <p class="visit-time-help">Choose your preferred visit date and time.</p>
             </div>
         <?php endif; ?>
         <?php if ($hideProperty): ?>
@@ -128,6 +128,11 @@ function renderVisitFields(string $prefix, string $intent = 'visit', string $pro
             </div>
             <p class="ai-message-help">Press Shift + Enter for a new line.</p>
         </div>
+        <input type="hidden" name="ask_whatsapp_consent" value="1">
+        <label class="visit-consent" for="<?= h($prefix) ?>-whatsapp-consent">
+            <input id="<?= h($prefix) ?>-whatsapp-consent" type="checkbox" name="whatsapp_consent" value="1" required>
+            <span>I agree to receive WhatsApp follow-up messages about my enquiry.<?= $req() ?></span>
+        </label>
         <p class="form-status" role="status"></p>
         <button class="btn send-btn" type="submit"><?= $buttonHtml ?></button>
     </form>
@@ -154,6 +159,16 @@ function renderVisitModal(): void
             <h2 id="brochureAccessTitle">Your brochure is ready.</h2>
             <p>Thank you for your enquiry. Download the project brochure whenever you are ready.</p>
             <a class="btn brochure-download-link" href="#" data-brochure-base="<?= h(webPath('actions/brochure.php')) ?>">Download brochure ↧</a>
+        </div>
+    </div>
+    <div class="form-success-modal" id="formSuccessModal" hidden>
+        <div class="form-success-card" role="dialog" aria-modal="true" aria-labelledby="formSuccessTitle">
+            <button class="form-success-close" type="button" aria-label="Close">×</button>
+            <span class="form-success-icon" aria-hidden="true">✓</span>
+            <p class="eyebrow" id="formSuccessEyebrow">Submitted</p>
+            <h2 id="formSuccessTitle">Thank you.</h2>
+            <p id="formSuccessMessage">Your details have been submitted successfully. Please wait for our team to contact you.</p>
+            <button class="btn form-success-ok" type="button">Okay</button>
         </div>
     </div>
     <script type="application/json" id="propertyIndex"><?= json_encode(array_map(static function (array $property): array {

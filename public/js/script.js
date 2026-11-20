@@ -394,30 +394,57 @@ document.querySelectorAll('.visit-form').forEach((form) => {
     const timeInput = form.querySelector('[name="visit_time"]');
     if (!dateInput || !timeInput) return;
 
-    const localDate = (date) => {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
-    const syncVisitTime = () => {
-        const now = new Date();
-        const today = localDate(now);
-        dateInput.min = today;
-        if (dateInput.value === today) {
-            const minTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-            timeInput.min = minTime;
-            if (timeInput.value && timeInput.value < minTime) timeInput.value = '';
-        } else {
-            timeInput.removeAttribute('min');
-        }
-    };
-    dateInput.addEventListener('change', syncVisitTime);
-    syncVisitTime();
+    // Set date floor once only — do not re-apply on every change (that resets year typing).
+    const now = new Date();
+    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    if (!dateInput.getAttribute('min')) dateInput.min = today;
+    dateInput.max = dateInput.max || '2100-12-31';
+    // Allow any clock time; no live "must be after now" min on the time field.
+    timeInput.removeAttribute('min');
 });
 
 const visitModal = document.getElementById('visitModal');
 const brochureAccessModal = document.getElementById('brochureAccessModal');
+const formSuccessModal = document.getElementById('formSuccessModal');
+
+function openFormSuccess(intent) {
+    if (!formSuccessModal) return;
+    const eyebrow = formSuccessModal.querySelector('#formSuccessEyebrow');
+    const title = formSuccessModal.querySelector('#formSuccessTitle');
+    const message = formSuccessModal.querySelector('#formSuccessMessage');
+    if (intent === 'visit') {
+        if (eyebrow) eyebrow.textContent = 'Site visit requested';
+        if (title) title.textContent = 'Submitted successfully.';
+        if (message) message.textContent = 'Your site visit request has been submitted successfully. Please wait for our team to contact you.';
+    } else if (intent === 'brochure') {
+        if (eyebrow) eyebrow.textContent = 'Request received';
+        if (title) title.textContent = 'Submitted successfully.';
+        if (message) message.textContent = 'Your details have been submitted successfully. Please wait for our team to contact you.';
+    } else {
+        if (eyebrow) eyebrow.textContent = 'Enquiry received';
+        if (title) title.textContent = 'Submitted successfully.';
+        if (message) message.textContent = 'Your enquiry has been submitted successfully. Please wait for our team to contact you.';
+    }
+    formSuccessModal.hidden = false;
+    document.body.classList.add('modal-open');
+}
+
+function closeFormSuccess() {
+    if (!formSuccessModal) return;
+    formSuccessModal.hidden = true;
+    if ((!visitModal || visitModal.hidden) && (!brochureAccessModal || brochureAccessModal.hidden)) {
+        document.body.classList.remove('modal-open');
+    }
+}
+
+if (formSuccessModal) {
+    formSuccessModal.querySelector('.form-success-close')?.addEventListener('click', closeFormSuccess);
+    formSuccessModal.querySelector('.form-success-ok')?.addEventListener('click', closeFormSuccess);
+    formSuccessModal.addEventListener('click', (event) => {
+        if (event.target === formSuccessModal) closeFormSuccess();
+    });
+}
+
 document.querySelectorAll('.visit-open').forEach((button) => {
     button.addEventListener('click', () => {
         const form = visitModal.querySelector('form');
@@ -473,6 +500,11 @@ document.querySelectorAll('.visit-form').forEach((form) => {
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
         const status = form.querySelector('.form-status');
+        if (status) {
+            status.textContent = '';
+            status.classList.remove('error', 'is-ok');
+            status.removeAttribute('data-ok');
+        }
         if (!form.checkValidity()) {
             form.reportValidity();
             return;
@@ -480,17 +512,31 @@ document.querySelectorAll('.visit-form').forEach((form) => {
         const dateInput = form.querySelector('[name="visit_date"]');
         const timeInput = form.querySelector('[name="visit_time"]');
         if (dateInput && timeInput && dateInput.required) {
-            const selected = new Date(`${dateInput.value}T${timeInput.value}`);
-            if (Number.isNaN(selected.getTime()) || selected <= new Date()) {
-                status.textContent = 'Please choose a future date and time for your site visit.';
-                status.classList.add('error');
+            // Date must be today or later; any time of day is allowed (no "after now" check).
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const selectedDay = new Date(`${dateInput.value}T00:00:00`);
+            if (Number.isNaN(selectedDay.getTime()) || selectedDay < today || !timeInput.value) {
+                if (status) {
+                    status.textContent = 'Please choose a valid preferred date and time for your site visit.';
+                    status.classList.add('error');
+                }
                 return;
             }
         }
         const response = await fetch(form.action, { method: 'POST', body: new FormData(form) });
-        const data = await response.json();
-        status.textContent = data.message;
-        status.classList.toggle('error', !data.ok);
+        let data = { ok: false, message: 'Something went wrong. Please try again.' };
+        try {
+            data = await response.json();
+        } catch (_) {
+            /* keep fallback */
+        }
+        if (status) {
+            status.textContent = data.message || '';
+            status.classList.toggle('error', !data.ok);
+            status.classList.toggle('is-ok', !!data.ok);
+            if (data.ok) status.setAttribute('data-ok', '1');
+        }
         if (!data.ok) return;
         const intent = form.querySelector('[name="intent"]').value;
         const propertyId = form.querySelector('[name="property_id"]').value;
@@ -499,6 +545,7 @@ document.querySelectorAll('.visit-form').forEach((form) => {
         const countryCode = form.querySelector('[name="country_code"]')?.value || '+91';
         const countryCurrent = form.querySelector('.country-current');
         const countryLabel = countryCurrent ? countryCurrent.textContent.trim() : 'India +91';
+        const preferredCity = form.querySelector('[name="preferred_city"]');
         form.reset();
         form.querySelector('[name="csrf_token"]').value = token;
         form.querySelector('[name="intent"]').value = intent;
@@ -507,16 +554,25 @@ document.querySelectorAll('.visit-form').forEach((form) => {
         if (countryCurrent && countryCurrent.firstChild) {
             countryCurrent.firstChild.textContent = countryLabel + ' ';
         }
+        if (preferredCity) preferredCity.value = '';
         if (lockedProperty) {
             const lockedInput = form.querySelector('[name="property_id"]');
             if (lockedInput) lockedInput.value = lockedProperty;
+        }
+        const resetDate = form.querySelector('[name="visit_date"]');
+        const resetTime = form.querySelector('[name="visit_time"]');
+        if (resetTime) resetTime.removeAttribute('min');
+        if (resetDate && !resetDate.getAttribute('min')) {
+            const n = new Date();
+            resetDate.min = `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}-${String(n.getDate()).padStart(2, '0')}`;
         }
         if (form.closest('#visitModal') && intent === 'brochure') {
             closeVisit();
             setTimeout(() => openBrochureAccess(data.property_id || propertyId, data.brochure_url || ''), 200);
             return;
         }
-        if (form.closest('#visitModal')) setTimeout(closeVisit, 900);
+        if (form.closest('#visitModal')) closeVisit();
+        openFormSuccess(intent);
     });
 });
 
